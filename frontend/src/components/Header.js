@@ -1,31 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Title from "./Title";
 
-const titleLetter = styled.span`
-  color: ${(props) => props.color};
+const LinkText = styled.span`
+  font-family: "Trispace", sans-serif;
+`;
+
+const HeaderTitle = styled.div`
+  font-family: "Monda", sans-serif;
 `;
 
 const Header = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
   return (
-    <div className="ui huge inverted menu">
-      <div className="header item">
-        Redux-<titleLetter color="#00F0F0">T</titleLetter>etris
-      </div>
+    <div className="ui massive inverted menu">
+      <HeaderTitle className="header item">
+        REDUX- <Title />
+      </HeaderTitle>
       <Link className="yellow item" to="/">
         <i class="gamepad icon" />
-        Play Tetris
+        <LinkText>Play Tetris</LinkText>
       </Link>
       <Link className="teal item" to="/leaderboards">
-        <i class="trophy icon" /> Leaderboards
+        <i class="trophy icon" /> <LinkText>Leaderboards</LinkText>
       </Link>
       <Link className="pink item" to="/signin">
         <i class="sign-in icon" />
-        Sign In
+        <LinkText>Sign In</LinkText>
       </Link>
       <Link className="pink item" to="/signup">
         <i class="address card outline icon" />
-        Sign Up
+        <LinkText>Sign Up</LinkText>
       </Link>
     </div>
   );

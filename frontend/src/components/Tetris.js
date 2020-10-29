@@ -1,10 +1,11 @@
 import React from "react";
+import Title from "./Title";
 
 class Tetris extends React.Component {
   render() {
     return (
       <div>
-        <h1>Tetris</h1>
+        <h1 style={{ color: "white" }}>Tetris</h1>
       </div>
     );
   }

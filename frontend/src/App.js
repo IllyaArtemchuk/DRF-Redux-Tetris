@@ -21,7 +21,8 @@ const App = () => {
   return (
     <Application>
       <Router history={history}>
-        <Header>
+        <Header />
+        <div className="ui container">
           <Switch>
             <Route path="/" exact component={Tetris} />
             <Route path="/leaderboards" exact component={Leaderboards} />
@@ -29,7 +30,7 @@ const App = () => {
             <Route path="/signin" exact component={SignIn} />
             <Route path="/profile/:id" exact component={Profile} />
           </Switch>
-        </Header>
+        </div>
       </Router>
     </Application>
   );
