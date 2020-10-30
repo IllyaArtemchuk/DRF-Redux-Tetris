@@ -1,39 +1,69 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import HeaderLink from "./HeaderLink";
 import styled from "styled-components";
 import Title from "./Title";
-
-const LinkText = styled.span`
-  font-family: "Trispace", sans-serif;
-`;
 
 const HeaderTitle = styled.div`
   font-family: "Monda", sans-serif;
 `;
 
+const NavBar = styled.div`
+  &&& {
+    background-color: #050505;
+  }
+`;
+
 const Header = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   return (
-    <div className="ui massive inverted menu">
-      <HeaderTitle className="header item">
-        REDUX- <Title />
-      </HeaderTitle>
-      <Link className="yellow item" to="/">
-        <i class="gamepad icon" />
-        <LinkText>Play Tetris</LinkText>
-      </Link>
-      <Link className="teal item" to="/leaderboards">
-        <i class="trophy icon" /> <LinkText>Leaderboards</LinkText>
-      </Link>
-      <Link className="pink item" to="/signin">
-        <i class="sign-in icon" />
-        <LinkText>Sign In</LinkText>
-      </Link>
-      <Link className="pink item" to="/signup">
-        <i class="address card outline icon" />
-        <LinkText>Sign Up</LinkText>
-      </Link>
-    </div>
+    <NavBar className="ui massive menu inverted">
+      <NavBar className="ui massive inverted menu container">
+        <Link className="header item" to="/">
+          <HeaderTitle>
+            REDUX- <Title />
+          </HeaderTitle>
+        </Link>
+        <HeaderLink
+          to="/"
+          color="green"
+          id="1"
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
+          icon="gamepad"
+          text="Play Tetris"
+        />
+        <HeaderLink
+          to="/leaderboards"
+          color="yellow"
+          id="2"
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
+          icon="trophy"
+          text="Leaderboards"
+        />
+        <div className="right menu">
+          <HeaderLink
+            to="/signin"
+            color="pink"
+            id="3"
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+            icon="sign-in"
+            text="Sign In"
+          />
+          <HeaderLink
+            to="/signup"
+            color="purple"
+            id="4"
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+            icon="address card outline"
+            text="Sign Up"
+          />
+        </div>
+      </NavBar>
+    </NavBar>
   );
 };
 
