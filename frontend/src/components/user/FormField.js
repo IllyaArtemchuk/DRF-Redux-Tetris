@@ -7,7 +7,7 @@ const Input = styled.input`
       props.active
         ? props.color === "pink"
           ? "#ff59b7"
-          : null
+          : "#d659ff"
         : null}!important;
     border-style: solid !important;
     border-width: 1.5px !important;
@@ -29,7 +29,8 @@ const FormField = ({
   return (
     <div className="field">
       <label>
-        {name.toString().charAt(0).toUpperCase() + name.toString().slice(1)}
+        {placeholder.toString().charAt(0).toUpperCase() +
+          placeholder.toString().slice(1)}
       </label>
       <Input
         type={type}

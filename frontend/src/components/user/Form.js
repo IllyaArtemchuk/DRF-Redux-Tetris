@@ -21,9 +21,10 @@ const SignUpRedirect = styled.div`
     border-width: 1px;
     border-color: #050505;
     &:hover {
-      border-color: #d659ff;
+      border-color: ${(props) =>
+        props.color === "pink" ? "#d659ff" : "#ff59b7"};
     }
-    transition: 0.3s;
+    transition: 0.1s;
     border-radius: 25px;
   }
 `;
@@ -34,28 +35,18 @@ const Segment = styled.div`
     border-style: solid;
     border-color: black;
     border-width: 1.5px;
-    transition: 0.4s;
+    transition: 0.2s;
     &:hover {
-      border-color: #ff59b7;
+      border-color: ${(props) =>
+        props.color === "pink" ? "#ff59b7" : "#d659ff"};
     }
   }
-  height: 300px;
 `;
 
 const LinkTag = styled(Link)`
   color: ${(props) => (props.color === "pink" ? "#ff59b7" : "#d659ff")};
   &:hover {
-    color: #c71cff;
-  }
-`;
-
-const Input = styled.input`
-  &&& {
-    border-color: ${(props) => (props.active ? "#ff59b7" : null)}!important;
-    border-style: solid !important;
-    border-width: 1.5px !important;
-    transition: 0.1s !important;
-    height: 35px;
+    color: ${(props) => (props.color === "pink" ? " #fc0a93" : "#9400c4")};
   }
 `;
 
@@ -103,25 +94,28 @@ class StandardForm extends React.Component {
   generateRedirectText = () => {
     switch (this.props.title) {
       case "Sign In":
+        console.log("SIGN IN TRIGGERD");
         return (
-          <div>
+          <span>
             New User?{" "}
             <LinkTag to="/signup" color="purple">
               Sign Up Here
             </LinkTag>{" "}
             instead.
-          </div>
+          </span>
         );
       case "Sign Up":
+        console.log("SIGN UP TRIGGERED");
         return (
-          <div>
+          <span>
             Already Have An Account?{" "}
             <LinkTag to="/signin" color="pink">
               Sign In Here
             </LinkTag>
-          </div>
+          </span>
         );
       default:
+        console.log("wtf");
         return "error";
     }
   };
@@ -134,6 +128,7 @@ class StandardForm extends React.Component {
           style={{
             backgroundColor: "#050505",
           }}
+          color={this.props.color}
         >
           <Header className="ui center alligned huge dividing header">
             {this.props.title}
@@ -174,9 +169,12 @@ class StandardForm extends React.Component {
           </ClickOutHandler>
         </Segment>
 
-        <SignUpRedirect className="ui inverted bottom attached message">
+        <SignUpRedirect
+          className="ui inverted bottom attached message"
+          color={this.props.color}
+        >
           <i className="icon help"></i>
-          New User? <LinkTag to="/signup">Sign Up Here</LinkTag> instead.
+          {this.generateRedirectText()}
         </SignUpRedirect>
       </FormContainer>
     );
