@@ -4,6 +4,7 @@ import history from "./history";
 import Tetris from "./components/Tetris";
 import SignUp from "./components/user/SignUp";
 import SignIn from "./components/user/SignIn";
+import TestSignIn from "./components/user/TestSignIn";
 import Profile from "./components/user/Profile";
 import Leaderboards from "./components/Leaderboards";
 import Header from "./components/Header";
@@ -27,7 +28,7 @@ const App = () => {
             <Route path="/" exact component={Tetris} />
             <Route path="/leaderboards" exact component={Leaderboards} />
             <Route path="/signup" exact component={SignUp} />
-            <Route path="/signin" exact component={SignIn} />
+            <Route path="/signin" exact component={TestSignIn} />
             <Route path="/profile/:id" exact component={Profile} />
           </Switch>
         </div>

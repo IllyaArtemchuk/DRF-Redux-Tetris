@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authSignIn } from "../../redux/authentication/authActions";
+import ContentContainer from "../ContentContainer";
 import { Link } from "react-router-dom";
+import FormContainer from "./FormContainer";
 import styled from "styled-components";
 import ClickOutHandler from "react-onclickout";
-import FormContainer from "./FormContainer";
 import FormField from "./FormField";
 
 const Header = styled.div`
@@ -42,17 +43,25 @@ const Segment = styled.div`
 `;
 
 const LinkTag = styled(Link)`
-  color: #d659ff;
+  color: ${(props) => (props.color === "pink" ? "#ff59b7" : "#d659ff")};
   &:hover {
     color: #c71cff;
   }
 `;
 
-class SignIn extends React.Component {
+const Input = styled.input`
+  &&& {
+    border-color: ${(props) => (props.active ? "#ff59b7" : null)}!important;
+    border-style: solid !important;
+    border-width: 1.5px !important;
+    transition: 0.1s !important;
+    height: 35px;
+  }
+`;
+
+class StandardForm extends React.Component {
   state = {
     selectedFormItem: null,
-    username: "",
-    password: "",
     activeInput: null,
   };
 
@@ -74,6 +83,49 @@ class SignIn extends React.Component {
     });
   };
 
+  generateFields = (data) => {
+    console.log(data);
+    return data.map((field, index) => (
+      <FormField
+        key={index}
+        name={field.name}
+        value={field.value}
+        onValueChange={field.onValueChange}
+        onClick={this.onActiveInputChange}
+        placeholder={field.placeholder}
+        activeInput={this.state.activeInput}
+        type={field.type}
+        color={field.color}
+      />
+    ));
+  };
+
+  generateRedirectText = () => {
+    switch (this.props.title) {
+      case "Sign In":
+        return (
+          <div>
+            New User?{" "}
+            <LinkTag to="/signup" color="purple">
+              Sign Up Here
+            </LinkTag>{" "}
+            instead.
+          </div>
+        );
+      case "Sign Up":
+        return (
+          <div>
+            Already Have An Account?{" "}
+            <LinkTag to="/signin" color="pink">
+              Sign In Here
+            </LinkTag>
+          </div>
+        );
+      default:
+        return "error";
+    }
+  };
+
   render() {
     return (
       <FormContainer>
@@ -84,11 +136,15 @@ class SignIn extends React.Component {
           }}
         >
           <Header className="ui center alligned huge dividing header">
-            Sign In
+            {this.props.title}
           </Header>
           <ClickOutHandler onClickOut={this.onFormClickOut}>
-            <form className="ui inverted form" onSubmit={this.props.authSignIn}>
-              <FormField
+            <form
+              className="ui inverted form"
+              onSubmit={this.props.handleSignIn}
+            >
+              {this.generateFields(this.props.fields)}
+              {/* <FormField
                 name="username"
                 value={this.state.username}
                 onChange={this.onInputChange}
@@ -96,7 +152,7 @@ class SignIn extends React.Component {
                 placeholder="username"
                 activeInput={this.state.activeInput}
                 type="text"
-                color="pink"
+                color="#ff59b7"
               />
               <FormField
                 name="password"
@@ -106,9 +162,12 @@ class SignIn extends React.Component {
                 placeholder="password"
                 activeInput={this.state.activeInput}
                 type="password"
-                color="pink"
-              />
-              <button className="fluid ui pink button" type="submit">
+                color="#ff59b7"
+              /> */}
+              <button
+                className={`fluid ui ${this.props.color} button`}
+                type="submit"
+              >
                 Sign-In
               </button>
             </form>
@@ -124,4 +183,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default connect(null, { authSignIn })(SignIn);
+export default StandardForm;
