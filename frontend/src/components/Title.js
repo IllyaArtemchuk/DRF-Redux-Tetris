@@ -17,6 +17,8 @@ const handleLetterColor = (letter) => {
       return "#d685ff";
     case "Z":
       return "#ff5c5c";
+    default:
+      return "#DFDFDF";
   }
 };
 

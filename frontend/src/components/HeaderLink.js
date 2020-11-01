@@ -35,7 +35,7 @@ const HeaderLink = ({
         style={
           id === selectedItem ? null : { color: `${colorReference[color]}` }
         }
-        class={`${icon} icon`}
+        className={`${icon} icon`}
       />
       <LinkText>{text}</LinkText>
     </Link>
