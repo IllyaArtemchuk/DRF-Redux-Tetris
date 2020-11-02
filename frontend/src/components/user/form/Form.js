@@ -1,7 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import { authSignIn } from "../../redux/authentication/authActions";
-import ContentContainer from "../ContentContainer";
 import { Link } from "react-router-dom";
 import FormContainer from "./FormContainer";
 import styled from "styled-components";
@@ -56,12 +53,6 @@ class StandardForm extends React.Component {
     activeInput: null,
   };
 
-  onInputChange = (e, input) => {
-    this.setState({
-      [input]: e.target.value,
-    });
-  };
-
   onActiveInputChange = (e, input) => {
     this.setState({
       activeInput: input,
@@ -75,7 +66,6 @@ class StandardForm extends React.Component {
   };
 
   generateFields = (data) => {
-    console.log(data);
     return data.map((field, index) => (
       <FormField
         key={index}
@@ -94,7 +84,6 @@ class StandardForm extends React.Component {
   generateRedirectText = () => {
     switch (this.props.title) {
       case "Sign In":
-        console.log("SIGN IN TRIGGERD");
         return (
           <span>
             New User?{" "}
@@ -105,7 +94,6 @@ class StandardForm extends React.Component {
           </span>
         );
       case "Sign Up":
-        console.log("SIGN UP TRIGGERED");
         return (
           <span>
             Already Have An Account?{" "}
@@ -115,7 +103,6 @@ class StandardForm extends React.Component {
           </span>
         );
       default:
-        console.log("wtf");
         return "error";
     }
   };
@@ -136,39 +123,18 @@ class StandardForm extends React.Component {
           <ClickOutHandler onClickOut={this.onFormClickOut}>
             <form
               className="ui inverted form"
-              onSubmit={this.props.handleSignIn}
+              onSubmit={this.props.handleFormSubmit}
             >
               {this.generateFields(this.props.fields)}
-              {/* <FormField
-                name="username"
-                value={this.state.username}
-                onChange={this.onInputChange}
-                onClick={this.onActiveInputChange}
-                placeholder="username"
-                activeInput={this.state.activeInput}
-                type="text"
-                color="#ff59b7"
-              />
-              <FormField
-                name="password"
-                value={this.state.password}
-                onChange={this.onInputChange}
-                onClick={this.onActiveInputChange}
-                placeholder="password"
-                activeInput={this.state.activeInput}
-                type="password"
-                color="#ff59b7"
-              /> */}
               <button
                 className={`fluid ui ${this.props.color} button`}
                 type="submit"
               >
-                Sign-In
+                {this.props.submitText}
               </button>
             </form>
           </ClickOutHandler>
         </Segment>
-
         <SignUpRedirect
           className="ui inverted bottom attached message"
           color={this.props.color}

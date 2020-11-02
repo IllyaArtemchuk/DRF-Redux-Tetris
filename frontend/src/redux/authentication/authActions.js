@@ -57,21 +57,24 @@ export const authSignIn = (username, password) => (dispatch) => {
       dispatch(checkAuthTimeout(3600));
     })
     .catch((err) => {
-      authFail(err);
+      dispatch(authFail(err));
     });
 };
 
-export const authSignup = (username, email, password1, password2) => (
+export const authSignup = (username, password1, password2, email) => (
   dispatch
 ) => {
   dispatch(authStart());
+  let params = {
+    username,
+    password1,
+    password2,
+  };
+  if (email !== "") {
+    params.email = email;
+  }
   axios
-    .post("http://127.0.0.1:8000/api/v1/rest-auth/registration/", {
-      username: username,
-      email: email,
-      password1: password1,
-      password2: password2,
-    })
+    .post("http://127.0.0.1:8000/api/v1/rest-auth/registration/", params)
     .then((res) => {
       let token = res.data.key;
       setToken(token);
@@ -79,6 +82,25 @@ export const authSignup = (username, email, password1, password2) => (
       dispatch(checkAuthTimeout(3600));
     })
     .catch((err) => {
-      authFail(err);
+      dispatch(authFail(err));
     });
+};
+
+export const authCheckState = () => (dispatch) => {
+  const token = localStorage.getItem("token");
+  if (token === undefined) {
+    dispatch(authLogout());
+  } else {
+    const expirationDate = new Date(localStorage.getItem("expirationDate"));
+    if (expirationDate <= new Date()) {
+      dispatch(authLogout());
+    } else {
+      dispatch(authSuccess(token));
+      dispatch(
+        checkAuthTimeout(
+          (expirationDate.getTime() - new Date().getTime()) / 1000
+        )
+      );
+    }
+  }
 };

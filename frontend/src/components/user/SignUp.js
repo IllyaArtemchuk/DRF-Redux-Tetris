@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authSignup } from "../../redux/authentication/authActions";
-import Form from "./Form";
+import Form from "./form/Form";
 
 class SignIn extends React.Component {
   state = {
@@ -10,12 +10,6 @@ class SignIn extends React.Component {
     password1: "",
     password2: "",
   };
-
-  componentDidUpdate(prevState) {
-    if (this.state !== prevState) {
-      console.log(this.state);
-    }
-  }
 
   onInputChange = (e, input) => {
     this.setState({
@@ -39,6 +33,7 @@ class SignIn extends React.Component {
       placeholder: "Email",
       type: "email",
       color: "purple",
+      extraInformation: "Optional",
     },
     {
       name: "password1",
@@ -59,31 +54,27 @@ class SignIn extends React.Component {
     },
   ];
 
-  onActiveInputChange = (e, input) => {
-    this.setState({
-      activeInput: input,
-    });
-  };
-
-  onFormClickOut = () => {
-    this.setState({
-      activeInput: null,
-    });
-  };
-
-  handleSignUp = (username, email, password1, password2) => {
-    this.authSignup();
+  handleSignUp = (e, username, password1, password2, email) => {
+    e.preventDefault();
+    this.props.authSignup(username, password1, password2, email);
   };
 
   render() {
     return (
       <Form
         title="Sign Up"
-        authSignIn={() =>
-          this.handleSignIn(this.state.username, this.state.password)
+        handleFormSubmit={(e) =>
+          this.handleSignUp(
+            e,
+            this.state.username,
+            this.state.password1,
+            this.state.password2,
+            this.state.email
+          )
         }
         fields={this.fields()}
         color="purple"
+        submitText="Sign Up"
       />
     );
   }
