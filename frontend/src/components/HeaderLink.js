@@ -15,18 +15,9 @@ const colorReference = {
   yellow: "#ffe942",
 };
 
-const HeaderLink = ({
-  to,
-  color,
-  id,
-  icon,
-  text,
-  selectedItem,
-  setSelectedItem,
-}) => {
+const HeaderLink = ({ to, color, id, icon, text, selectedItem }) => {
   return (
     <Link
-      onClick={() => setSelectedItem(id)}
       className={`${color} item ${id === selectedItem ? "active" : null}`}
       to={to}
       id={id}

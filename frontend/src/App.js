@@ -28,7 +28,7 @@ class App extends React.Component {
     return (
       <Application>
         <Router history={history}>
-          <Header />
+          <Header isAuthenticated={this.props.isAuthenticated} />
           <div className="ui container">
             <Switch>
               <Route path="/" exact component={Tetris} />
