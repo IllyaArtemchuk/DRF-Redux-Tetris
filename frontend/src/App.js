@@ -10,7 +10,8 @@ import Leaderboards from "./components/Leaderboards";
 import Header from "./components/Header";
 import styled from "styled-components";
 import backgroundImage from "./img/backgroundImage.jpg";
-import { authCheckState } from "./redux/authentication/authActions";
+import { authCheckState, authLogout } from "./redux/authentication/authActions";
+import { getUserData, userLogout } from "./redux/user/userActions";
 
 const Application = styled.div`
   width: 100vw;
@@ -24,11 +25,30 @@ class App extends React.Component {
     this.props.autoSignIn();
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.isAuthenticated &&
+      prevProps.isAuthenticated !== this.props.isAuthenticated
+    ) {
+      console.log("get user Data triggered from componentDidUpdate");
+      this.props.getUserData();
+    } else if (
+      !this.props.isAuthenticated &&
+      prevProps.isAuthenticated !== this.props.isAuthenticated
+    ) {
+      ("");
+      this.props.userLogOut();
+    }
+  }
+
   render() {
     return (
       <Application>
         <Router history={history}>
-          <Header isAuthenticated={this.props.isAuthenticated} />
+          <Header
+            isAuthenticated={this.props.isAuthenticated}
+            authLogOut={this.props.authLogOut}
+          />
           <div className="ui container">
             <Switch>
               <Route path="/" exact component={Tetris} />
@@ -53,6 +73,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     autoSignIn: () => dispatch(authCheckState()),
+    getUserData: () => dispatch(getUserData()),
+    userLogOut: () => dispatch(userLogout()),
+    authLogOut: () => dispatch(authLogout()),
   };
 };
 

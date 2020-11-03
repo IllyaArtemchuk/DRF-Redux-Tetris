@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
+import history from "../../history";
 
 export const authStart = () => {
   return {
@@ -55,6 +56,7 @@ export const authSignIn = (username, password) => (dispatch) => {
       setToken(token);
       dispatch(authSuccess(token));
       dispatch(checkAuthTimeout(3600));
+      history.push("/");
     })
     .catch((err) => {
       dispatch(authFail(err));

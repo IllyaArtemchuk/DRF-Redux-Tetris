@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import FormContainer from "./FormContainer";
 import styled from "styled-components";
 import ClickOutHandler from "react-onclickout";
 import FormField from "./FormField";
+import ErrorMessage from "../../ErrorMessage";
 
 const Header = styled.div`
   &&& {
@@ -107,9 +109,22 @@ class StandardForm extends React.Component {
     }
   };
 
+  showErrorMessage = () => {
+    if (this.props.authError) {
+      if (
+        this.props.authError.message === "Request failed with status code 400"
+      ) {
+        return <ErrorMessage errors={["Invalid Username or Password"]} />;
+      } else {
+        <div className="ui inverted purple message">An Error Occured.</div>;
+      }
+    }
+  };
+
   render() {
     return (
       <FormContainer>
+        {this.showErrorMessage()}
         <Segment
           className="ui inverted segment"
           style={{
@@ -147,4 +162,10 @@ class StandardForm extends React.Component {
   }
 }
 
-export default StandardForm;
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.error,
+  };
+};
+
+export default connect(mapStateToProps)(StandardForm);

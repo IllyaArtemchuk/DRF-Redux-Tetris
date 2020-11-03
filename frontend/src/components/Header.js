@@ -15,6 +15,12 @@ const NavBar = styled.div`
   }
 `;
 
+const LogOut = styled.a`
+  &&& {
+    font-family: "Trispace", sans-serif;
+  }
+`;
+
 const Header = (props) => {
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState(null);
@@ -82,14 +88,18 @@ const Header = (props) => {
                 icon="user"
                 text="Profile"
               />
-              <HeaderLink
-                to="/logout"
+              {/* <HeaderLink
+                to=""
                 color="purple"
                 id={4}
-                selectedItem={selectedItem}
                 icon="sign-out"
                 text="Log Out"
-              />
+                onClick={props.authLogOut}
+              /> */}
+              <LogOut className="purple item" onClick={props.authLogOut}>
+                <i className="sign-out icon" style={{ color: "#d659ff" }} />
+                Log Out
+              </LogOut>
             </React.Fragment>
           ) : (
             <React.Fragment>

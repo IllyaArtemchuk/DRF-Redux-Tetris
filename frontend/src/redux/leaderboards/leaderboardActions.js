@@ -20,3 +20,17 @@ export const leaderboardFail = (error) => {
     error: error,
   };
 };
+
+export const userDataSuccess = (userData) => {
+  return {
+    type: actionTypes.USERDATA_SUCCESS,
+    user: userData,
+  };
+};
+
+export const userDataLogout = () => {
+  return {
+    type: actionTypes.USERDATA_LOGOUT,
+    user: null,
+  };
+};
