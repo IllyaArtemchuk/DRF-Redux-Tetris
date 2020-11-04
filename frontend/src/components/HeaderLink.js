@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Menu } from "semantic-ui-react";
+import history from "../history";
 
 const LinkText = styled.span`
   font-family: "Trispace", sans-serif;
@@ -17,10 +19,11 @@ const colorReference = {
 
 const HeaderLink = ({ to, color, id, icon, text, selectedItem }) => {
   return (
-    <Link
-      className={`${color} item ${id === selectedItem ? "active" : null}`}
-      to={to}
+    <Menu.Item
       id={id}
+      color={color}
+      active={id === selectedItem}
+      onClick={() => history.push(to)}
     >
       <i
         style={
@@ -29,7 +32,7 @@ const HeaderLink = ({ to, color, id, icon, text, selectedItem }) => {
         className={`${icon} icon`}
       />
       <LinkText>{text}</LinkText>
-    </Link>
+    </Menu.Item>
   );
 };
 

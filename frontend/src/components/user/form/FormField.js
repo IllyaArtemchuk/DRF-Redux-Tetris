@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Form } from "semantic-ui-react";
 
 const Input = styled.input`
   &&& {
@@ -27,7 +28,7 @@ const FormField = ({
   color,
 }) => {
   return (
-    <div className="field">
+    <Form.Field>
       <label>
         {placeholder.toString().charAt(0).toUpperCase() +
           placeholder.toString().slice(1)}
@@ -42,7 +43,7 @@ const FormField = ({
         active={activeInput === name}
         color={color}
       />
-    </div>
+    </Form.Field>
   );
 };
 

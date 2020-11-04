@@ -1,19 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-
-const Container = styled.div`
-  &&& {
-    margin-top: 50px;
-  }
-`;
+import { Grid } from "semantic-ui-react";
 
 const ContentContainer = (props) => {
   return (
-    <Container className="ui grid">
-      <div className="two wide column" />
-      <div className="ten wide column">{props.children}</div>
-      <div className="two wide column" />
-    </Container>
+    <Grid>
+      <Grid.Row>
+        <Grid.Column width={2} />
+        <Grid.Column width={10}>{props.children}</Grid.Column>
+        <Grid.Column width={2} />
+      </Grid.Row>
+    </Grid>
   );
 };
 

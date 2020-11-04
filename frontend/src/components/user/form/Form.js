@@ -6,17 +6,20 @@ import styled from "styled-components";
 import ClickOutHandler from "react-onclickout";
 import FormField from "./FormField";
 import ErrorMessage from "../../ErrorMessage";
+import {
+  Segment,
+  Header,
+  Form,
+  Message,
+  Button,
+  Icon,
+} from "semantic-ui-react";
 
-const Header = styled.div`
-  &&& {
-    text-align: center;
-  }
-`;
-
-const SignUpRedirect = styled.div`
+const SignUpRedirect = styled(Message)`
   &&& {
     background-color: #050505;
     border-style: solid;
+    color: white;
     border-width: 1px;
     border-color: #050505;
     &:hover {
@@ -28,7 +31,7 @@ const SignUpRedirect = styled.div`
   }
 `;
 
-const Segment = styled.div`
+const StyledSegment = styled(Segment)`
   &&& {
     background-color: #050505;
     border-style: solid;
@@ -116,7 +119,7 @@ class StandardForm extends React.Component {
       ) {
         return <ErrorMessage errors={["Invalid Username or Password"]} />;
       } else {
-        <div className="ui inverted purple message">An Error Occured.</div>;
+        <div className="ui   purple message">An Error Occured.</div>;
       }
     }
   };
@@ -125,36 +128,21 @@ class StandardForm extends React.Component {
     return (
       <FormContainer>
         {this.showErrorMessage()}
-        <Segment
-          className="ui inverted segment"
-          style={{
-            backgroundColor: "#050505",
-          }}
-          color={this.props.color}
-        >
-          <Header className="ui center alligned huge dividing header">
+        <StyledSegment color={this.props.color}>
+          <Header textAlign="center" as="h1" inverted>
             {this.props.title}
           </Header>
           <ClickOutHandler onClickOut={this.onFormClickOut}>
-            <form
-              className="ui inverted form"
-              onSubmit={this.props.handleFormSubmit}
-            >
+            <Form inverted onSubmit={this.props.handleFormSubmit}>
               {this.generateFields(this.props.fields)}
-              <button
-                className={`fluid ui ${this.props.color} button`}
-                type="submit"
-              >
+              <Button color={this.props.color} type="submit" fluid>
                 {this.props.submitText}
-              </button>
-            </form>
+              </Button>
+            </Form>
           </ClickOutHandler>
-        </Segment>
-        <SignUpRedirect
-          className="ui inverted bottom attached message"
-          color={this.props.color}
-        >
-          <i className="icon help"></i>
+        </StyledSegment>
+        <SignUpRedirect attached="bottom" color={this.props.color}>
+          <Icon name="help" />
           {this.generateRedirectText()}
         </SignUpRedirect>
       </FormContainer>

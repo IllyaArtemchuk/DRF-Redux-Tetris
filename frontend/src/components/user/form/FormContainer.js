@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { Grid } from "semantic-ui-react";
 
-const Container = styled.div`
+const StyledGrid = styled(Grid)`
   &&& {
     margin-top: 5%;
   }
@@ -9,11 +10,13 @@ const Container = styled.div`
 
 const FormContainer = (props) => {
   return (
-    <Container className="ui grid">
-      <div className="five wide column" />
-      <div className="six wide column">{props.children}</div>
-      <div className="five wide column" />
-    </Container>
+    <StyledGrid>
+      <Grid.Row>
+        <Grid.Column width={5} />
+        <Grid.Column width={6}>{props.children}</Grid.Column>
+        <Grid.Column width={5} />
+      </Grid.Row>
+    </StyledGrid>
   );
 };
 

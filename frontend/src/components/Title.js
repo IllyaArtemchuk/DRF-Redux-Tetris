@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const handleLetterColor = (letter) => {
-  switch (letter) {
+const handleLetterColor = (block) => {
+  // These letters are tetris shapes, not alphabetical letters
+  switch (block) {
     case "I":
       return "#0dd1d1";
     case "J":
@@ -23,18 +24,18 @@ const handleLetterColor = (letter) => {
 };
 
 const Letter = styled.span`
-  color: ${({ letter }) => handleLetterColor(letter)};
+  color: ${({ block }) => handleLetterColor(block)};
 `;
 
 const Title = () => {
   return (
     <React.Fragment>
-      <Letter letter="O">T</Letter>
-      <Letter letter="Z">E</Letter>
-      <Letter letter="T">T</Letter>
-      <Letter letter="L">R</Letter>
-      <Letter letter="I">I</Letter>
-      <Letter letter="S">S</Letter>
+      <Letter block="O">T</Letter>
+      <Letter block="Z">E</Letter>
+      <Letter block="T">T</Letter>
+      <Letter block="L">R</Letter>
+      <Letter block="I">I</Letter>
+      <Letter block="S">S</Letter>
     </React.Fragment>
   );
 };
