@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import FormContainer from "./FormContainer";
+import FormGrid from "./FormGrid";
 import styled from "styled-components";
 import ClickOutHandler from "react-onclickout";
 import FormField from "./FormField";
@@ -39,11 +39,16 @@ const StyledSegment = styled(Segment)`
     border-width: 1.5px;
     transition: 0.2s;
     &:hover {
-      border-color: ${(props) =>
-        props.color === "pink" ? "#ff59b7" : "#d659ff"};
-    }
-  }
-`;
+      border-color: ${(props) => {
+        switch (props.color) {
+          case "pink":
+            return "#ff59b7";
+          case "purple":
+            return "#d659ff";
+          default:
+            return "#ff59b7";
+        }
+      }}`;
 
 const LinkTag = styled(Link)`
   color: ${(props) => (props.color === "pink" ? "#ff59b7" : "#d659ff")};
@@ -73,15 +78,11 @@ class StandardForm extends React.Component {
   generateFields = (data) => {
     return data.map((field, index) => (
       <FormField
+        field={field}
         key={index}
-        name={field.name}
-        value={field.value}
-        onValueChange={field.onValueChange}
-        onClick={this.onActiveInputChange}
-        placeholder={field.placeholder}
+        activeInputChange={this.onActiveInputChange}
         activeInput={this.state.activeInput}
-        type={field.type}
-        color={field.color}
+        color={this.props.color}
       />
     ));
   };
@@ -114,19 +115,15 @@ class StandardForm extends React.Component {
 
   showErrorMessage = () => {
     if (this.props.authError) {
-      if (
-        this.props.authError.message === "Request failed with status code 400"
-      ) {
-        return <ErrorMessage errors={["Invalid Username or Password"]} />;
-      } else {
-        <div className="ui   purple message">An Error Occured.</div>;
-      }
+      return <ErrorMessage errors={[this.props.authError.response]} />;
+    } else {
+      <div className="ui   purple message">An Error Occured.</div>;
     }
   };
 
   render() {
     return (
-      <FormContainer>
+      <FormGrid>
         {this.showErrorMessage()}
         <StyledSegment color={this.props.color}>
           <Header textAlign="center" as="h1" inverted>
@@ -145,7 +142,7 @@ class StandardForm extends React.Component {
           <Icon name="help" />
           {this.generateRedirectText()}
         </SignUpRedirect>
-      </FormContainer>
+      </FormGrid>
     );
   }
 }

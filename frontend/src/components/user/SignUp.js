@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { authSignup } from "../../redux/authentication/authActions";
+import { authSignup, authClear } from "../../redux/authentication/authActions";
 import Form from "./form/Form";
 
 class SignIn extends React.Component {
@@ -9,12 +9,50 @@ class SignIn extends React.Component {
     email: "",
     password1: "",
     password2: "",
+    usernameTouched: false,
+    emailTouched: false,
+    password1Touched: false,
+    password2Touched: false,
+    error: false,
   };
+
+  componentDidMount() {
+    this.props.authClear;
+  }
 
   onInputChange = (e, input) => {
     this.setState({
       [input]: e.target.value,
     });
+  };
+
+  setTouched = (touchState) => {
+    this.setState({
+      [touchState]: true,
+    });
+  };
+
+  validation = (value, field) => {
+    var emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let touchedField = `${field}Touched`;
+    if (this.state[touchedField]) {
+      if (field === "email" && !value.match(emailFormat) && value !== "") {
+        return "Invalid Email Address!";
+      }
+      if (value.length === 0 && field !== "email") {
+        return "Field cant be blank";
+      }
+      if (
+        value.length < 8 &&
+        (field === "password1" || field === "password2")
+      ) {
+        return "Password is at least 8 characters long";
+      }
+      if (field === "password2" && value !== this.state.password1) {
+        return "Password fields do not match!";
+      }
+    }
+    return null;
   };
 
   fields = () => [
@@ -24,7 +62,8 @@ class SignIn extends React.Component {
       onValueChange: this.onInputChange,
       placeholder: "Username",
       type: "text",
-      color: "purple",
+      setTouched: () => this.setTouched("usernameTouched"),
+      validation: () => this.validation(this.state.username, "username"),
     },
     {
       name: "email",
@@ -32,25 +71,27 @@ class SignIn extends React.Component {
       onValueChange: this.onInputChange,
       placeholder: "Email",
       type: "email",
-      color: "purple",
-      extraInformation: "Optional",
+      setTouched: () => this.setTouched("emailTouched"),
+      validation: () => this.validation(this.state.email, "email"),
+      extraInformation: "(Optional)",
     },
     {
       name: "password1",
       value: this.state.password1,
       onValueChange: this.onInputChange,
       placeholder: "Password",
+      setTouched: () => this.setTouched("password1Touched"),
+      validation: () => this.validation(this.state.password1, "password1"),
       type: "password",
-      color: "purple",
-      extraInformation: "Password must be at least 8 characters",
     },
     {
       name: "password2",
       value: this.state.password2,
       onValueChange: this.onInputChange,
       placeholder: "Re-enter password",
+      setTouched: () => this.setTouched("password2Touched"),
+      validation: () => this.validation(this.state.password2, "password2"),
       type: "password",
-      color: "purple",
     },
   ];
 
@@ -80,4 +121,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default connect(null, { authSignup })(SignIn);
+export default connect(null, { authSignup, authClear })(SignIn);

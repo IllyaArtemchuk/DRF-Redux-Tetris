@@ -30,6 +30,12 @@ export const authLogout = () => {
   };
 };
 
+export const authClear = () => {
+  return {
+    type: actionTypes.AUTH_CLEAR,
+  };
+};
+
 export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     setTimeout(() => {

@@ -8,7 +8,7 @@ const StyledGrid = styled(Grid)`
   }
 `;
 
-const FormContainer = (props) => {
+const FormGrid = (props) => {
   return (
     <StyledGrid>
       <Grid.Row>
@@ -20,4 +20,4 @@ const FormContainer = (props) => {
   );
 };
 
-export default FormContainer;
+export default FormGrid;

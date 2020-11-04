@@ -36,6 +36,12 @@ const authLogout = (state, action) => {
   });
 };
 
+const authClear = (state, action) => {
+  return updateState(state, {
+    error: null,
+  });
+};
+
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
@@ -46,6 +52,8 @@ const authReducer = (state = initialState, action) => {
       return authSuccess(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
+    case actionTypes.AUTH_CLEAR:
+      return authClear(state, action);
     default:
       return state;
   }
