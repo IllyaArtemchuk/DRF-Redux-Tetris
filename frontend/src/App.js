@@ -2,7 +2,7 @@ import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import history from "./history";
-import Tetris from "./components/Tetris";
+import Tetris from "./components/tetris/Tetris";
 import SignUp from "./components/user/SignUp";
 import SignIn from "./components/user/SignIn";
 import Profile from "./components/user/Profile";
