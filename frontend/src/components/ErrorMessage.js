@@ -17,10 +17,24 @@ const ErrorHeader = styled.div`
 `;
 
 const ErrorMessage = ({ errors }) => {
-  const renderErrors = errors.map((error, index) => (
-    <li key={index}>{error}</li>
+  const FormatField = (field) => {
+    switch (field) {
+      case "username":
+        return "Username";
+      case "email":
+        return "Email";
+      case "password":
+      case "password1":
+      case "password2":
+        return "Password";
+      default:
+        return "Field";
+    }
+  };
+  const renderErrors = Object.keys(errors[0]).map((key, index) => (
+    <li key={index}>{`${FormatField(key)}: ${errors[0][key][0]}`}</li>
   ));
-
+  console.log(errors[0]);
   return (
     <ErrorBody className="ui black message">
       <div className="header">

@@ -14,6 +14,7 @@ import {
   Button,
   Icon,
 } from "semantic-ui-react";
+import { authClear } from "../../../redux/authentication/authActions";
 
 const SignUpRedirect = styled(Message)`
   &&& {
@@ -62,6 +63,10 @@ class StandardForm extends React.Component {
     selectedFormItem: null,
     activeInput: null,
   };
+
+  componentDidMount() {
+    this.props.authClear();
+  }
 
   onActiveInputChange = (e, input) => {
     this.setState({
@@ -115,7 +120,7 @@ class StandardForm extends React.Component {
 
   showErrorMessage = () => {
     if (this.props.authError) {
-      return <ErrorMessage errors={[this.props.authError.response]} />;
+      return <ErrorMessage errors={[this.props.authError.response.data]} />;
     } else {
       <div className="ui   purple message">An Error Occured.</div>;
     }
@@ -153,4 +158,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(StandardForm);
+export default connect(mapStateToProps, { authClear })(StandardForm);

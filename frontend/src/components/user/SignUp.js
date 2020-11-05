@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { authSignup, authClear } from "../../redux/authentication/authActions";
+import { authSignup } from "../../redux/authentication/authActions";
 import Form from "./form/Form";
 
 class SignIn extends React.Component {
@@ -15,10 +15,6 @@ class SignIn extends React.Component {
     password2Touched: false,
     error: false,
   };
-
-  componentDidMount() {
-    this.props.authClear;
-  }
 
   onInputChange = (e, input) => {
     this.setState({
@@ -97,6 +93,12 @@ class SignIn extends React.Component {
 
   handleSignUp = (e, username, password1, password2, email) => {
     e.preventDefault();
+    this.setState({
+      usernameTouched: true,
+      emailTouched: true,
+      password1Touched: true,
+      password2Touched: true,
+    });
     this.props.authSignup(username, password1, password2, email);
   };
 
@@ -121,4 +123,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default connect(null, { authSignup, authClear })(SignIn);
+export default connect(null, { authSignup })(SignIn);
