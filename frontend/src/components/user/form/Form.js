@@ -16,6 +16,7 @@ import {
 } from "semantic-ui-react";
 import { authClear } from "../../../redux/authentication/authActions";
 
+// The color is the opposite of the passed in color (pink returns purple)
 const SignUpRedirect = styled(Message)`
   &&& {
     background-color: #050505;

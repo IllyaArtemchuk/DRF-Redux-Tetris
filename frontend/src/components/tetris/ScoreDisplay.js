@@ -1,39 +1,60 @@
 import React from "react";
 import { Card, Feed, Icon } from "semantic-ui-react";
+import styled from "styled-components";
+
+const ScoreCard = styled(Card)`
+  &&& {
+    font-family: PixelFont;
+    width: 11vw;
+    height: 7vw;
+    background-color: #050505;
+  }
+`;
+
+const ScoreText = styled(Feed.Summary)`
+  &&& {
+    font-size: 0.8vw !important;
+    color: white !important;
+    white-space: nowrap;
+  }
+`;
+
+const FirstCounter = styled(Feed.Event)`
+  &&& {
+    margin-top: 0.3vw;
+  }
+`;
+
+const Counter = styled(Feed.Event)`
+  &&& {
+    margin-top: 1vw;
+  }
+`;
 
 const ScoreDisplay = (props) => {
   return (
-    <Card>
+    <ScoreCard>
       <Card.Content>
         <Feed>
-          <Feed.Event>
-            <Feed.Label>
-              <Icon name="star"></Icon>
-            </Feed.Label>
+          <FirstCounter>
             <Feed.Content>
-              <Feed.Summary>10,000</Feed.Summary>
+              <ScoreText>SCORE 10,000</ScoreText>
             </Feed.Content>
-          </Feed.Event>
+          </FirstCounter>
 
-          <Feed.Event>
-            <Feed.Label>
-              <Icon name="star"></Icon>
-            </Feed.Label>
+          <Counter>
             <Feed.Content>
-              <Feed.Summary>10,000</Feed.Summary>
+              <ScoreText>TIME 2:00</ScoreText>
             </Feed.Content>
-          </Feed.Event>
-          <Feed.Event>
-            <Feed.Label>
-              <Icon name="star"></Icon>
-            </Feed.Label>
+          </Counter>
+          <Counter>
             <Feed.Content>
-              <Feed.Summary>10,000</Feed.Summary>
+              <ScoreText>LINES 6</ScoreText>
             </Feed.Content>
-          </Feed.Event>
+          </Counter>
         </Feed>
       </Card.Content>
-    </Card>
+    </ScoreCard>
   );
 };
 

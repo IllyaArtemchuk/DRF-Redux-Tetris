@@ -24,3 +24,8 @@ export const generateNewPiece = (pieces = TETROMINOS) => {
 export const startGame = (pieces = undefined) => (dispatch) => {
   dispatch(stageCreate(pieces));
 };
+
+// Takes the nextPiece and makes it the player piece, also generates a new nextPiece
+export const setNewPlayerPiece = (pieces = TETROMINOS) => {
+  return {};
+};

@@ -18,8 +18,8 @@ const display = (props) => {
   return (
     <Wrapper>
       <PieceDisplays>
-        <PieceDisplay />
-        <PieceDisplay />
+        <PieceDisplay text="HOLD" />
+        <PieceDisplay text="NEXT" />
       </PieceDisplays>
       <ScoreDisplay />
     </Wrapper>

@@ -5,11 +5,11 @@ import styled from "styled-components";
 const StyledCard = styled(Card)`
   &&& {
     width: 5vw;
-    height: 6vw;
+    height: 7vw;
     text-align: center;
     background-color: #050505;
     color: white;
-    font-size: 0.5vw;
+    font-size: 0.7vw;
     font-family: PixelFont;
     border-style: none;
     border: 0px;
@@ -18,10 +18,13 @@ const StyledCard = styled(Card)`
   }
 `;
 
+const CardText = styled(Card.Header)`
+  margin-top: 0.1vw;
+`;
 const PieceDisplay = (props) => {
   return (
     <StyledCard>
-      <Card.Header>NEXT PIECE</Card.Header>
+      <CardText style={{ marginTop: ".1vw" }}>{props.text}</CardText>
       <Image src={require("../../static/img/pieces/Empty.jpg")} size="small" />
     </StyledCard>
   );
