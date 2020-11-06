@@ -1,46 +1,29 @@
 import React from "react";
+import { Card, Image } from "semantic-ui-react";
 import styled from "styled-components";
-import Cell from "./Cell";
 
-const StyledDisplay = styled.div`
+const StyledCard = styled(Card)`
   &&& {
-    display: grid;
-    grid-template-rows: repeat(
-      ${(props) => props.height},
-      calc(25vw / ${(props) => props.width})
-    );
-    grid-template-columns: repeat(${(props) => props.width}, 1fr);
-    grid-gap: 1px;
-    border: 2px solid #333;
-    width: 100%;
-    max-width: 10vw;
-    background: #111;
+    width: 5vw;
+    height: 6vw;
+    text-align: center;
+    background-color: #050505;
+    color: white;
+    font-size: 0.5vw;
+    font-family: PixelFont;
+    border-style: none;
+    border: 0px;
+    margin-right: 1vw;
+    margin-top: 0px;
   }
 `;
 
-const PieceDisplay = ({ piece, pieces }) => {
-  const blank = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ];
-  const renderPiece = () => {
-    if (piece) {
-      return piece.map((row) =>
-        row.map((cell, x) => <Cell key={x} type={cell[0]} pieces={pieces} />)
-      );
-    } else {
-      return blank.map((row) =>
-        row.map((cell, x) => <Cell key={x} type={cell[0]} pieces={pieces} />)
-      );
-    }
-  };
-
+const PieceDisplay = (props) => {
   return (
-    <StyledDisplay height={blank.length} width={blank.width}>
-      {renderPiece()}
-    </StyledDisplay>
+    <StyledCard>
+      <Card.Header>NEXT PIECE</Card.Header>
+      <Image src={require("../../static/img/pieces/Empty.jpg")} size="small" />
+    </StyledCard>
   );
 };
 

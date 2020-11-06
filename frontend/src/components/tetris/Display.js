@@ -1,13 +1,29 @@
 import React from "react";
 import PieceDisplay from "./PieceDisplay";
+import ScoreDisplay from "./ScoreDisplay";
 import styled from "styled-components";
+import { Grid } from "semantic-ui-react";
 
-const Display = (props) => {
+const Wrapper = styled.div`
+  &&& {
+    margin-left: 2vw !important;
+  }
+`;
+
+const PieceDisplays = styled.div`
+  display: flex;
+`;
+
+const display = (props) => {
   return (
-    <div>
-      <PieceDisplay piece={props.nextPiece} pieces={props.pieces} />
-    </div>
+    <Wrapper>
+      <PieceDisplays>
+        <PieceDisplay />
+        <PieceDisplay />
+      </PieceDisplays>
+      <ScoreDisplay />
+    </Wrapper>
   );
 };
 
-export default Display;
+export default display;

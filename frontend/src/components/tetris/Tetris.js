@@ -4,13 +4,15 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { generateNewPiece } from "../../redux/tetris/game/gameActions";
 import Display from "./Display";
+import { Container } from "semantic-ui-react";
+import PieceDisplay from "./PieceDisplay";
 
-export const StyledTetris = styled.div`
+export const StyledTetris = styled(Container)`
   &&& {
     display: flex;
     align-item: flex-start;
     padding: 40px;
-    margin: 0 auto;
+    margin: 0;
     max-width: 900px;
   }
 `;
@@ -24,7 +26,7 @@ class Tetris extends React.Component {
     return (
       <StyledTetris>
         <Stage />
-        <Display nextPiece={this.props.nextPiece} pieces={this.props.pieces} />
+        <Display />
       </StyledTetris>
     );
   }

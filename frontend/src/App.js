@@ -9,7 +9,7 @@ import Profile from "./components/user/Profile";
 import Leaderboards from "./components/Leaderboards";
 import Header from "./components/Header";
 import styled from "styled-components";
-import backgroundImage from "./img/backgroundImage.jpg";
+import backgroundImage from "./static/img/backgroundImage.jpg";
 import { authCheckState, authLogout } from "./redux/authentication/authActions";
 import { getUserData, userLogout } from "./redux/user/userActions";
 

@@ -1,6 +1,6 @@
 export default {
-  stageWidth: 12,
-  stageHeight: 20,
+  stageWidth: 10,
+  stageHeight: 18,
   dropTimeEasy: 400,
   dropTimeHard: 800,
 };
