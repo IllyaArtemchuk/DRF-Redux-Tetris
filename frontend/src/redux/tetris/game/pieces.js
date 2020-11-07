@@ -65,5 +65,5 @@ export const TETROMINOS = {
 export const randomPiece = (pieces) => {
   const ref = pieces.reference;
   const randomTetromino = ref[Math.floor(Math.random() * ref.length)];
-  return pieces[randomTetromino];
+  return pieces[randomTetromino].shape;
 };

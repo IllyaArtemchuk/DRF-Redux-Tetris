@@ -2,10 +2,13 @@ import * as actionTypes from "./actionTypes";
 import { updateState } from "../../utility";
 
 const initialState = {
+  gameRunning: false,
   stage: null,
   dropTime: null,
   pieces: null,
   currentPiece: null,
+  playerPosition: { x: 0, y: 0 },
+  playerCollided: false,
   nextPiece: null,
   heldPiece: null,
 };
@@ -19,12 +22,11 @@ const stageCreate = (state, action) => {
 
 const generateNewPiece = (state, action) => {
   return updateState(state, {
-    nextPiece: action.piece,
+    nextPiece: action.nextPiece,
   });
 };
 
 const setDropTime = (state, action) => {
-  console.log(action.dropTime);
   return updateState(state, {
     dropTime: action.dropTime,
   });

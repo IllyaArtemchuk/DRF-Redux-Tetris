@@ -6,8 +6,26 @@ const StyledCard = styled(Card)`
   &&& {
     width: 5vw;
     height: 7vw;
-    min-height: 70px;
-    min-width: 50px;
+    min-height: ${(props) => {
+      switch (props.size) {
+        case "small":
+          return "75px";
+        case "medium":
+          return "90px";
+        case "large":
+          return "100px";
+      }
+    }};
+    min-width: ${(props) => {
+      switch (props.size) {
+        case "small":
+          return "50px";
+        case "medium":
+          return "65px";
+        case "large":
+          return "80px";
+      }
+    }};
     text-align: center;
     background-color: #050505;
     color: white;
@@ -15,7 +33,7 @@ const StyledCard = styled(Card)`
     font-family: PixelFont;
     border-style: none;
     border: 0px;
-    margin-right: 1vw;
+    margin-right: calc(4px + 0.9vw);
     margin-top: 0px;
   }
 `;
@@ -25,7 +43,7 @@ const CardText = styled(Card.Header)`
 `;
 const PieceDisplay = (props) => {
   return (
-    <StyledCard>
+    <StyledCard size={props.size}>
       <CardText style={{ marginTop: ".1vw" }}>{props.text}</CardText>
       <Image src={require("../../static/img/pieces/Empty.jpg")} size="small" />
     </StyledCard>

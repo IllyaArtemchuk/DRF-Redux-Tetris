@@ -1,7 +1,6 @@
 import React from "react";
-import { Card, Feed, Icon } from "semantic-ui-react";
+import { Card, Feed } from "semantic-ui-react";
 import styled from "styled-components";
-import { connect } from "react-redux";
 
 const ScoreCard = styled(Card)`
   &&& {
@@ -12,7 +11,7 @@ const ScoreCard = styled(Card)`
     min-width: ${(props) => {
       switch (props.size) {
         case "large":
-          return "160px";
+          return "170px";
         case "medium":
           return "140px";
         case "small":
@@ -44,39 +43,31 @@ const Counter = styled(Feed.Event)`
   }
 `;
 
-class ScoreDisplay extends React.Component {
-  render() {
-    return (
-      <ScoreCard size={this.props.size}>
-        <Card.Content>
-          <Feed>
-            <FirstCounter size={this.props.size}>
-              <Feed.Content>
-                <ScoreText>SCORE 1,000</ScoreText>
-              </Feed.Content>
-            </FirstCounter>
+const ScoreDisplay = (props) => {
+  return (
+    <ScoreCard size={props.size}>
+      <Card.Content>
+        <Feed>
+          <FirstCounter size={props.size}>
+            <Feed.Content>
+              <ScoreText>SCORE 1,000</ScoreText>
+            </Feed.Content>
+          </FirstCounter>
 
-            <Counter size={this.props.size}>
-              <Feed.Content>
-                <ScoreText>TIME 2:00</ScoreText>
-              </Feed.Content>
-            </Counter>
-            <Counter size={this.props.size}>
-              <Feed.Content>
-                <ScoreText>LINES 6</ScoreText>
-              </Feed.Content>
-            </Counter>
-          </Feed>
-        </Card.Content>
-      </ScoreCard>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    size: state.app.size,
-  };
+          <Counter size={props.size}>
+            <Feed.Content>
+              <ScoreText>LINES 6</ScoreText>
+            </Feed.Content>
+          </Counter>
+          <Counter size={props.size}>
+            <Feed.Content>
+              <ScoreText>TIME 2:00</ScoreText>
+            </Feed.Content>
+          </Counter>
+        </Feed>
+      </Card.Content>
+    </ScoreCard>
+  );
 };
 
-export default connect(mapStateToProps)(ScoreDisplay);
+export default ScoreDisplay;

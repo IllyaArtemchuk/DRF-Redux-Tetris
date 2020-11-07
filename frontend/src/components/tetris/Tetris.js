@@ -1,7 +1,7 @@
 import React from "react";
 import Stage from "./Stage";
 import styled from "styled-components";
-import Display from "./Display";
+import SideBar from "./SideBar";
 import { Container } from "semantic-ui-react";
 
 export const StyledTetris = styled(Container)`
@@ -18,7 +18,7 @@ const Tetris = (props) => {
   return (
     <StyledTetris>
       <Stage />
-      <Display />
+      <SideBar startGame={props.startGame} />
     </StyledTetris>
   );
 };

@@ -8,7 +8,7 @@ import SignIn from "./components/user/SignIn";
 import Profile from "./components/user/Profile";
 import Leaderboards from "./components/Leaderboards";
 import Header from "./components/Header";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import backgroundImage from "./static/img/backgroundImage.jpg";
 import { authCheckState, authLogout } from "./redux/authentication/authActions";
 import { getUserData, userLogout } from "./redux/user/userActions";
@@ -42,6 +42,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.autoSignIn();
     window.addEventListener("resize", this.changeSizeState);
+    this.changeSizeState();
   }
 
   componentDidUpdate(prevProps) {
