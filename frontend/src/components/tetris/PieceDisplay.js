@@ -6,10 +6,12 @@ const StyledCard = styled(Card)`
   &&& {
     width: 5vw;
     height: 7vw;
+    min-height: 70px;
+    min-width: 50px;
     text-align: center;
     background-color: #050505;
     color: white;
-    font-size: 0.7vw;
+    font-size: calc(5px + 0.7vw);
     font-family: PixelFont;
     border-style: none;
     border: 0px;

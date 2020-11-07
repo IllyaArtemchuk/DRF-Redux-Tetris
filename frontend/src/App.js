@@ -2,7 +2,7 @@ import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import history from "./history";
-import Tetris from "./components/tetris/Tetris";
+import TetrisWrapper from "./components/tetris/TetrisLogicWrapper";
 import SignUp from "./components/user/SignUp";
 import SignIn from "./components/user/SignIn";
 import Profile from "./components/user/Profile";
@@ -15,17 +15,17 @@ import { getUserData, userLogout } from "./redux/user/userActions";
 import { windowResize } from "./redux/application/appActions";
 
 const Application = styled.div`
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
   background: url(${backgroundImage}) #000;
   background-size: cover;
+  background-attachment: fixed;
+  overflow: hidden;
 `;
 
 class App extends React.Component {
   // Changes the size of the window in store
   changeSizeState = () => {
-    console.log("current size", this.props.size);
-    console.log(window.innerWidth);
     if (window.innerWidth > 1100 && this.props.size !== "large") {
       this.props.windowResize("large");
     } else if (
@@ -69,7 +69,7 @@ class App extends React.Component {
           />
           <div className="ui container">
             <Switch>
-              <Route path="/" exact component={Tetris} />
+              <Route path="/" exact component={TetrisWrapper} />
               <Route path="/leaderboards" exact component={Leaderboards} />
               <Route path="/signup" exact component={SignUp} />
               <Route path="/signin" exact component={SignIn} />

@@ -23,12 +23,29 @@ const generateNewPiece = (state, action) => {
   });
 };
 
+const setDropTime = (state, action) => {
+  console.log(action.dropTime);
+  return updateState(state, {
+    dropTime: action.dropTime,
+  });
+};
+
+const setCurrentPiece = (state, action) => {
+  return updateState(state, {
+    currentPiece: action.currentPiece,
+  });
+};
+
 const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.STAGE_CREATE:
       return stageCreate(state, action);
     case actionTypes.GENERATE_NEW_PIECE:
       return generateNewPiece(state, action);
+    case actionTypes.SET_DROPTIME:
+      return setDropTime(state, action);
+    case actionTypes.SET_CURRENT_PIECE:
+      return setCurrentPiece(state, action);
     default:
       return state;
   }

@@ -23,10 +23,6 @@ const StyledStage = styled.div`
 `;
 
 class Stage extends React.Component {
-  componentDidMount() {
-    this.props.startGame();
-  }
-
   renderStage = () => {
     if (this.props.stage) {
       return this.props.stage.map((row) =>

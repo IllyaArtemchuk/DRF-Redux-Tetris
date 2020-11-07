@@ -21,11 +21,33 @@ export const generateNewPiece = (pieces = TETROMINOS) => {
   };
 };
 
-export const startGame = (pieces = undefined) => (dispatch) => {
+// Takes the next piece and sets it as the current player piece
+export const setCurrentPiece = (piece) => {
+  return {
+    type: actionTypes.SET_CURRENT_PIECE,
+    currentPiece: piece,
+  };
+};
+
+export const setDropTime = (difficulty) => {
+  return {
+    type: actionTypes.SET_DROPTIME,
+    dropTime: config.dropTime[difficulty],
+  };
+};
+
+export const startGame = (difficulty = "easy", pieces = undefined) => (
+  dispatch
+) => {
   dispatch(stageCreate(pieces));
+  dispatch(generateNewPiece(pieces));
+  dispatch(setDropTime(difficulty));
 };
 
 // Takes the nextPiece and makes it the player piece, also generates a new nextPiece
-export const setNewPlayerPiece = (pieces = TETROMINOS) => {
-  return {};
+export const setNewPlayerPiece = (nextPiece, pieces = undefined) => (
+  dispatch
+) => {
+  dispatch(setCurrentPiece(nextPiece));
+  dispatch(generateNewPiece(pieces));
 };
