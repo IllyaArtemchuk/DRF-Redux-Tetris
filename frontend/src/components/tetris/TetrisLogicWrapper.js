@@ -1,7 +1,11 @@
 import React from "react";
 import Tetris from "./Tetris";
 import { connect } from "react-redux";
-import { startGame, setupGame } from "../../redux/tetris/game/gameActions";
+import {
+  startGameSetup,
+  setupGame,
+  handleKeyPress,
+} from "../../redux/tetris/game/gameActions";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 
 // This Component Handles main tetris logic with redux
@@ -20,7 +24,7 @@ class TetrisWrapper extends React.Component {
         <KeyboardEventHandler
           handleKeys={["left", "right", "down", "up", "space", "e", "q", "v"]}
           onKeyEvent={(key, e) =>
-            console.log(`do something upon keydown event of ${key}`)
+            this.props.handleKeyPress(key, this.props.game)
           }
         />
         <Tetris game={this.props.game} startGame={this.startGame} />
@@ -38,7 +42,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setupGame: () => dispatch(setupGame()),
-    startGame: (piece) => dispatch(startGame(piece)),
+    startGame: (piece) => dispatch(startGameSetup(piece)),
+    handleKeyPress: (key, gameState) =>
+      dispatch(handleKeyPress(key, gameState)),
   };
 };
 

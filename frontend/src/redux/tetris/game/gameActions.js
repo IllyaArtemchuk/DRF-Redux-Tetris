@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import config from "./config";
+import { checkCollision } from "./utilityFunctions";
 import { TETROMINOS, randomPiece } from "./pieces";
 
 ////////////////////////////////////////////////
@@ -50,6 +51,37 @@ export const updatePlayerPosition = (positionObj) => {
   };
 };
 
+export const resetPlayer = () => {
+  return {
+    type: actionTypes.RESET_PLAYER_POSITION,
+    playerPosition: { x: config.stageWidth / 2 - 1, y: 0 },
+  };
+};
+
+export const redrawStage = () => {
+  return {
+    type: actionTypes.REDRAW_STAGE,
+  };
+};
+
+export const startGame = () => {
+  return {
+    type: actionTypes.START_GAME,
+  };
+};
+
+export const stopGame = () => {
+  return {
+    type: actionTypes.STOP_GAME,
+  };
+};
+
+export const collidedTrue = () => {
+  return {
+    type: actionTypes.COLLISION_DETECTED,
+  };
+};
+
 //////////////////////////////////////
 //         ACTIONS YOU CALL         //
 //////////////////////////////////////
@@ -61,27 +93,87 @@ export const setupGame = (pieces = undefined) => (dispatch) => {
 };
 
 // On Game Start
-export const startGame = (piece, difficulty = "easy", pieces = undefined) => (
-  dispatch
-) => {
+export const startGameSetup = (
+  piece,
+  difficulty = "easy",
+  pieces = undefined
+) => (dispatch) => {
   dispatch(setDropTime(difficulty));
   dispatch(setCurrentPiece(piece));
   dispatch(generateNewPiece(pieces));
+  dispatch(resetPlayer());
+  dispatch(redrawStage());
+  dispatch(startGame());
 };
 
-// Takes the nextPiece and makes it the player piece, also generates a new nextPiece
-export const setNewPlayerPiece = (nextPiece, pieces = undefined) => (
-  dispatch
-) => {
+export const handleMerge = (nextPiece, pieces = undefined) => (dispatch) => {
+  // Set Collided To True and redraw the stage so that it merges
+  dispatch(collidedTrue());
+  dispatch(redrawStage());
+  // Takes the next piece and sets it as the current player piece
   dispatch(setCurrentPiece(nextPiece));
   dispatch(generateNewPiece(pieces));
+  // Puts the player position back up top and redraws to display
+  dispatch(resetPlayer());
+  dispatch(redrawStage());
+};
+
+// Handles all game inputs
+export const handleKeyPress = (key, gameState) => (dispatch) => {
+  if (gameState.gameRunning) {
+    switch (key) {
+      case "left":
+      case "right":
+        dispatch(movePlayerHorizontal(key, gameState));
+        break;
+      case "down":
+        dispatch(movePlayerDown(gameState));
+        break;
+      case "up":
+      case "e":
+        dispatch(rotatePlayer("right", gameState));
+        break;
+      case "q":
+        dispatch(rotatePlayer("left", gameState));
+      default:
+        console.log(`${key} pressed`);
+    }
+  }
 };
 
 //// Player Movement ////
-export const MovePlayer = (positionObj) => (dispatch) => {
-  dispatch(updatePlayerPosition(positionObj));
+export const movePlayerHorizontal = (key, gameState) => (dispatch) => {
+  let movement;
+  switch (key) {
+    case "left":
+      movement = { x: -1, y: 0 };
+      break;
+    case "right":
+      movement = { x: 1, y: 0 };
+      break;
+    default:
+      return;
+  }
+  if (!checkCollision(gameState, movement)) {
+    dispatch(updatePlayerPosition(movement));
+    dispatch(redrawStage());
+  }
 };
 
-//// Alternative? ////
+export const movePlayerDown = (gameState) => (dispatch) => {
+  let movement = { x: 0, y: 1 };
+  if (!checkCollision(gameState, movement)) {
+    dispatch(updatePlayerPosition(movement));
+    dispatch(redrawStage());
+  } else {
+    if (gameState.playerPosition.y < 1) {
+      dispatch(stopGame());
+    } else {
+      dispatch(handleMerge(gameState.nextPiece));
+    }
+  }
+};
 
-export const HandleMovement = (key) => (dispatch) => {};
+export const rotatePlayer = (direction) => (dispatch) => {
+  return;
+};

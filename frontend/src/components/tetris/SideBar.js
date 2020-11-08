@@ -42,13 +42,15 @@ class SideBar extends React.Component {
           <PieceDisplay text="NEXT" size={this.props.size} />
         </PieceDisplays>
         <ScoreDisplay size={this.props.size} />
-        <StartButton
-          color="green"
-          size={this.props.size}
-          onClick={this.props.startGame}
-        >
-          Start Game
-        </StartButton>
+        {!this.props.gameStarted ? (
+          <StartButton
+            color="green"
+            size={this.props.size}
+            onClick={this.props.startGame}
+          >
+            Start Game
+          </StartButton>
+        ) : null}
       </Wrapper>
     );
   }
@@ -57,6 +59,7 @@ class SideBar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     size: state.app.size,
+    gameStarted: state.game.gameRunning,
   };
 };
 
