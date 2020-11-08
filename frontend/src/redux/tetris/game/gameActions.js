@@ -82,6 +82,12 @@ export const collidedTrue = () => {
   };
 };
 
+export const collidedFalse = () => {
+  return {
+    type: actionTypes.COLLIDED_FALSE,
+  };
+};
+
 //////////////////////////////////////
 //         ACTIONS YOU CALL         //
 //////////////////////////////////////
@@ -90,6 +96,7 @@ export const collidedTrue = () => {
 export const setupGame = (pieces = undefined) => (dispatch) => {
   dispatch(stageCreate(pieces));
   dispatch(generateNewPiece(pieces));
+  dispatch(stopGame());
 };
 
 // On Game Start
@@ -102,19 +109,21 @@ export const startGameSetup = (
   dispatch(setCurrentPiece(piece));
   dispatch(generateNewPiece(pieces));
   dispatch(resetPlayer());
+  dispatch(collidedFalse());
   dispatch(redrawStage());
   dispatch(startGame());
 };
 
-export const handleMerge = (nextPiece, pieces = undefined) => (dispatch) => {
+export const handleMerge = (gameState, pieces = undefined) => (dispatch) => {
   // Set Collided To True and redraw the stage so that it merges
   dispatch(collidedTrue());
   dispatch(redrawStage());
   // Takes the next piece and sets it as the current player piece
-  dispatch(setCurrentPiece(nextPiece));
+  dispatch(setCurrentPiece(gameState.nextPiece));
   dispatch(generateNewPiece(pieces));
-  // Puts the player position back up top and redraws to display
   dispatch(resetPlayer());
+  // Puts the player position back up top and redraws to display
+  dispatch(collidedFalse());
   dispatch(redrawStage());
 };
 
@@ -168,12 +177,22 @@ export const movePlayerDown = (gameState) => (dispatch) => {
   } else {
     if (gameState.playerPosition.y < 1) {
       dispatch(stopGame());
-    } else {
-      dispatch(handleMerge(gameState.nextPiece));
     }
+    dispatch(handleMerge(gameState));
   }
 };
 
-export const rotatePlayer = (direction) => (dispatch) => {
+export const rotatePlayer = (direction, gameState) => (dispatch) => {
+  function rotate() {
+    // transpose
+    let rotated = gameState.currentPiece.map((_, index) =>
+      gameState.currentPiece.map((col) => col[index])
+    );
+    if (direction === "right") return rotated.map((row) => row.reverse());
+    return rotated.reverse();
+  }
+  let rotatedPiece = rotate();
+  dispatch(setCurrentPiece(rotatedPiece));
+  dispatch(redrawStage());
   return;
 };

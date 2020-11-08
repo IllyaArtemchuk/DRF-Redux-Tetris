@@ -62,6 +62,11 @@ const updatePlayerPosition = (state, action) => {
 const resetPlayerPosition = (state, action) => {
   return updateState(state, {
     playerPosition: action.playerPosition,
+  });
+};
+
+const collidedFalse = (state, action) => {
+  return updateState(state, {
     playerCollided: false,
   });
 };
@@ -116,6 +121,8 @@ const gameReducer = (state = initialState, action) => {
       return redrawStage(state, action);
     case actionTypes.COLLISION_DETECTED:
       return collidedTrue(state, action);
+    case actionTypes.COLLIDED_FALSE:
+      return collidedFalse(state, action);
     default:
       return state;
   }
