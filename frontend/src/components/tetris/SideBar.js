@@ -38,8 +38,18 @@ class SideBar extends React.Component {
     return (
       <Wrapper>
         <PieceDisplays>
-          <PieceDisplay text="HOLD" size={this.props.size} />
-          <PieceDisplay text="NEXT" size={this.props.size} />
+          <PieceDisplay
+            text="HOLD"
+            size={this.props.size}
+            piece={this.props.heldPiece}
+            gameRunning={this.props.gameRunning}
+          />
+          <PieceDisplay
+            text="NEXT"
+            size={this.props.size}
+            piece={this.props.nextPiece}
+            gameRunning={this.props.gameRunning}
+          />
         </PieceDisplays>
         <ScoreDisplay size={this.props.size} />
         {!this.props.gameStarted ? (

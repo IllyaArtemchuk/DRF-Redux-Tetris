@@ -15,6 +15,15 @@ class TetrisWrapper extends React.Component {
     this.props.setupGame();
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.game.gameRunning !== this.props.game.gameRunning &&
+      this.props.game.gameRunning === false
+    ) {
+      clearInterval(this.Interval);
+    }
+  }
+
   startInterval = () => {
     this.Interval = setInterval(() => {
       this.props.movePlayerDown(this.props.game);
@@ -23,7 +32,7 @@ class TetrisWrapper extends React.Component {
 
   startGame = () => {
     this.props.startGame(this.props.game.nextPiece);
-    this.startInterval();
+    //this.startInterval();
   };
 
   render() {
@@ -32,20 +41,21 @@ class TetrisWrapper extends React.Component {
         <KeyboardEventHandler
           handleKeys={["left", "right", "down", "up", "space", "e", "q", "v"]}
           onKeyEvent={(key, e) => {
-            console.log(e);
             if (key === "down") {
-              console.log("trigored");
-              clearInterval(this.Interval);
+              //  clearInterval(this.Interval);
             }
             this.props.handleKeyPress(key, this.props.game);
           }}
         />
         <KeyboardEventHandler
-          handleKeys={["down"]}
-          handleEventType="keydown"
+          handleKeys={["down", "space"]}
+          handleEventType="keyup"
           onKeyEvent={(key, e) => {
-            if (this.props.game.gameRunning) {
-              this.startInterval();
+            if (this.props.game.gameRunning && key === "down") {
+              //   this.startInterval();
+            }
+            if (key === "space") {
+              this.props.movePlayerDown(this.props.game);
             }
           }}
         />

@@ -55,6 +55,12 @@ const setCurrentPiece = (state, action) => {
   });
 };
 
+const holdPiece = (state, action) => {
+  return updateState(state, {
+    heldPiece: action.heldPiece,
+  });
+};
+
 const updatePlayerPosition = (state, action) => {
   return updateState(state, {
     playerPosition: {
@@ -147,6 +153,8 @@ const gameReducer = (state = initialState, action) => {
       return stageCreate(state, action);
     case actionTypes.GENERATE_NEW_PIECE:
       return generateNewPiece(state, action);
+    case actionTypes.HOLD_PIECE:
+      return holdPiece(state, action);
     case actionTypes.SET_DROPTIME:
       return setDropTime(state, action);
     case actionTypes.SET_CURRENT_PIECE:

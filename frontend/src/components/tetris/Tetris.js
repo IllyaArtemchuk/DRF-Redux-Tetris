@@ -18,7 +18,12 @@ const Tetris = (props) => {
   return (
     <StyledTetris>
       <Stage />
-      <SideBar startGame={props.startGame} />
+      <SideBar
+        startGame={props.startGame}
+        nextPiece={props.game.nextPiece}
+        heldPiece={props.game.heldPiece}
+        gameRunning={props.game.gameRunning}
+      />
     </StyledTetris>
   );
 };

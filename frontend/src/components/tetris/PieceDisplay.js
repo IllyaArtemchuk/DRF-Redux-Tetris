@@ -41,11 +41,46 @@ const StyledCard = styled(Card)`
 const CardText = styled(Card.Header)`
   margin-top: 0.1vw;
 `;
+
 const PieceDisplay = (props) => {
+  const RenderPiece = () => {
+    let piece = props.piece;
+    let pieceChar = null;
+    let pieceUrl = "Empty";
+    if (piece && props.gameRunning) {
+      if (piece[1][1] !== 0) {
+        pieceChar = piece[1][1];
+      } else {
+        for (let row of piece) {
+          for (let col of piece) {
+            if (piece[row][col] !== 0) {
+              pieceChar = piece[row][col];
+              break;
+            }
+          }
+          if (pieceChar !== null) break;
+        }
+      }
+      if (pieceChar !== null) {
+        pieceUrl = pieceChar;
+      }
+    }
+    return (
+      <Image
+        src={require("../../static/img/pieces/" + pieceUrl + ".jpg")}
+        size="small"
+      />
+    );
+  };
+
+  const justreturnthefuckingurl = () => {
+    return "../../static/img/pieces/Empty.jpg";
+  };
+
   return (
     <StyledCard size={props.size}>
       <CardText style={{ marginTop: ".1vw" }}>{props.text}</CardText>
-      <Image src={require("../../static/img/pieces/Empty.jpg")} size="small" />
+      {RenderPiece()}
     </StyledCard>
   );
 };

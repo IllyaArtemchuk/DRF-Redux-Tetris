@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as actionTypes from "./actionTypes";
 import config from "./config";
 import { checkCollision } from "./utilityFunctions";
@@ -25,6 +26,19 @@ export const generateNewPiece = (pieces = TETROMINOS) => {
   return {
     type: actionTypes.GENERATE_NEW_PIECE,
     nextPiece: randomPiece(pieces),
+  };
+};
+
+export const holdPiece = (piece) => {
+  return {
+    type: actionTypes.HOLD_PIECE,
+    heldPiece: piece,
+  };
+};
+
+export const getHeldPiece = () => {
+  return {
+    type: actionTypes.GET_HELD_PIECE,
   };
 };
 
@@ -158,6 +172,13 @@ export const handleKeyPress = (key, gameState) => (dispatch) => {
         break;
       case "q":
         dispatch(rotatePlayer(-1, gameState));
+        break;
+      case "space":
+        dispatch(hardDrop(gameState));
+        break;
+      case "v":
+        dispatch(handleHeldPiece(gameState));
+        break;
       default:
         console.log(`${key} pressed`);
     }
@@ -206,9 +227,7 @@ export const rotatePlayer = (direction, gameState) => (dispatch) => {
     return rotated.reverse();
   }
   let rotatedPiece = rotate(gameState.currentPiece, direction);
-  let copiedPlayerPosition = JSON.parse(
-    JSON.stringify(gameState.playerPosition)
-  );
+  let copiedPlayerPosition = _.cloneDeep(gameState.playerPosition);
 
   let pos = copiedPlayerPosition.x;
   let offset = 1;
@@ -233,4 +252,57 @@ export const rotatePlayer = (direction, gameState) => (dispatch) => {
   dispatch(replacePlayerPosition(copiedPlayerPosition));
   dispatch(redrawStage());
   return;
+};
+
+export const hardDrop = (gameState) => (dispatch) => {
+  let movement = { x: 0, y: 1 };
+  while (!checkCollision(gameState, movement)) {
+    movement.y += 1;
+  }
+  movement.y -= 1;
+  let newPlayerPosition = _.cloneDeep(gameState.playerPosition);
+  newPlayerPosition.y += movement.y;
+  dispatch(replacePlayerPosition(newPlayerPosition));
+  dispatch(redrawStage());
+  // The KeyEventHandler in TetrisLogicWrapper.js moves the piece down one more time which merges it
+};
+
+export const handleHeldPiece = (gameState, pieces = undefined) => (
+  dispatch
+) => {
+  if (gameState.heldPiece === null) {
+    if (dispatch(handleSwappingPieces(gameState, gameState.nextPiece))) {
+      dispatch(holdPiece(gameState.currentPiece));
+      dispatch(setCurrentPiece(gameState.nextPiece));
+      dispatch(generateNewPiece(pieces));
+    }
+  } else {
+    let heldPiece = _.cloneDeep(gameState.heldPiece);
+    if (dispatch(handleSwappingPieces(gameState, heldPiece))) {
+      dispatch(holdPiece(gameState.currentPiece));
+      dispatch(setCurrentPiece(heldPiece));
+      dispatch(handleSwappingPieces(gameState, gameState.heldPiece));
+    }
+  }
+  dispatch(redrawStage());
+};
+
+const handleSwappingPieces = (gameState, newCurr) => (dispatch) => {
+  let newCurrent = _.cloneDeep(newCurr);
+  let copiedPlayerPosition = _.cloneDeep(gameState.playerPosition);
+  let pos = copiedPlayerPosition.x;
+  let offset = 1;
+  while (
+    checkCollision(gameState, { x: 0, y: 0 }, copiedPlayerPosition, newCurrent)
+  ) {
+    // Moves the position of the tetromino left and right until it finds a location that isint colliding
+    copiedPlayerPosition.x += offset;
+    offset = -(offset + (offset > 0 ? 1 : -1));
+    // moves the tetromino up if a valid position is too far away
+    if (offset > newCurrent[0].length) {
+      return false;
+    }
+  }
+  dispatch(replacePlayerPosition(copiedPlayerPosition));
+  return true;
 };
