@@ -64,6 +64,12 @@ export const redrawStage = () => {
   };
 };
 
+export const sweepRows = () => {
+  return {
+    type: actionTypes.SWEEP_ROWS,
+  };
+};
+
 export const startGame = () => {
   return {
     type: actionTypes.START_GAME,
@@ -85,6 +91,13 @@ export const collidedTrue = () => {
 export const collidedFalse = () => {
   return {
     type: actionTypes.COLLIDED_FALSE,
+  };
+};
+
+export const replacePlayerPosition = (playerPosition) => {
+  return {
+    type: actionTypes.REPLACE_PLAYER_POSITION,
+    playerPosition: playerPosition,
   };
 };
 
@@ -121,6 +134,7 @@ export const handleMerge = (gameState, pieces = undefined) => (dispatch) => {
   // Takes the next piece and sets it as the current player piece
   dispatch(setCurrentPiece(gameState.nextPiece));
   dispatch(generateNewPiece(pieces));
+  dispatch(sweepRows());
   dispatch(resetPlayer());
   // Puts the player position back up top and redraws to display
   dispatch(collidedFalse());
@@ -140,10 +154,10 @@ export const handleKeyPress = (key, gameState) => (dispatch) => {
         break;
       case "up":
       case "e":
-        dispatch(rotatePlayer("right", gameState));
+        dispatch(rotatePlayer(1, gameState));
         break;
       case "q":
-        dispatch(rotatePlayer("left", gameState));
+        dispatch(rotatePlayer(-1, gameState));
       default:
         console.log(`${key} pressed`);
     }
@@ -175,6 +189,8 @@ export const movePlayerDown = (gameState) => (dispatch) => {
     dispatch(updatePlayerPosition(movement));
     dispatch(redrawStage());
   } else {
+    // I couldnt find a better way of stopping the game so
+    // it stops when a block reaches the top instead of when a block is out of bounds like normal tetris
     if (gameState.playerPosition.y < 1) {
       dispatch(stopGame());
     }
@@ -183,16 +199,38 @@ export const movePlayerDown = (gameState) => (dispatch) => {
 };
 
 export const rotatePlayer = (direction, gameState) => (dispatch) => {
-  function rotate() {
+  function rotate(piece, dir) {
     // transpose
-    let rotated = gameState.currentPiece.map((_, index) =>
-      gameState.currentPiece.map((col) => col[index])
-    );
-    if (direction === "right") return rotated.map((row) => row.reverse());
+    let rotated = piece.map((_, index) => piece.map((col) => col[index]));
+    if (dir === 1) return rotated.map((row) => row.reverse());
     return rotated.reverse();
   }
-  let rotatedPiece = rotate();
+  let rotatedPiece = rotate(gameState.currentPiece, direction);
+  let copiedPlayerPosition = JSON.parse(
+    JSON.stringify(gameState.playerPosition)
+  );
+
+  let pos = copiedPlayerPosition.x;
+  let offset = 1;
+  while (
+    checkCollision(
+      gameState,
+      { x: 0, y: 0 },
+      copiedPlayerPosition,
+      rotatedPiece
+    )
+  ) {
+    // Moves the position of the tetromino left and right until it finds a location that isint colliding
+    copiedPlayerPosition.x += offset;
+    offset = -(offset + (offset > 0 ? 1 : -1));
+    // resets the tetromino if a position is too far away
+    if (offset > rotatedPiece[0].length) {
+      rotatedPiece = rotate(rotatedPiece, -direction);
+      copiedPlayerPosition.x = pos;
+    }
+  }
   dispatch(setCurrentPiece(rotatedPiece));
+  dispatch(replacePlayerPosition(copiedPlayerPosition));
   dispatch(redrawStage());
   return;
 };
