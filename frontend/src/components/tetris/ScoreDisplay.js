@@ -50,18 +50,18 @@ const ScoreDisplay = (props) => {
         <Feed>
           <FirstCounter size={props.size}>
             <Feed.Content>
-              <ScoreText>SCORE 1,000</ScoreText>
+              <ScoreText>SCORE {props.score}</ScoreText>
             </Feed.Content>
           </FirstCounter>
 
           <Counter size={props.size}>
             <Feed.Content>
-              <ScoreText>LINES 6</ScoreText>
+              <ScoreText>LINES {props.rowsCleared}</ScoreText>
             </Feed.Content>
           </Counter>
           <Counter size={props.size}>
             <Feed.Content>
-              <ScoreText>TIME 2:00</ScoreText>
+              <ScoreText>TIME {props.time}</ScoreText>
             </Feed.Content>
           </Counter>
         </Feed>

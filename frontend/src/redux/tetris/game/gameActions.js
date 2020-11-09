@@ -42,6 +42,18 @@ export const getHeldPiece = () => {
   };
 };
 
+export const holdUsed = () => {
+  return {
+    type: actionTypes.HOLD_USED,
+  };
+};
+
+export const resetHold = () => {
+  return {
+    type: actionTypes.RESET_HOLD,
+  };
+};
+
 // Takes the next piece and sets it as the current player piece
 export const setCurrentPiece = (piece) => {
   return {
@@ -108,6 +120,8 @@ export const collidedFalse = () => {
   };
 };
 
+// used for more drastic movement of
+// the player in the case of collission detection or swapping out piece for held piece
 export const replacePlayerPosition = (playerPosition) => {
   return {
     type: actionTypes.REPLACE_PLAYER_POSITION,
@@ -152,6 +166,7 @@ export const handleMerge = (gameState, pieces = undefined) => (dispatch) => {
   dispatch(resetPlayer());
   // Puts the player position back up top and redraws to display
   dispatch(collidedFalse());
+  dispatch(resetHold());
   dispatch(redrawStage());
 };
 
@@ -284,6 +299,7 @@ export const handleHeldPiece = (gameState, pieces = undefined) => (
       dispatch(handleSwappingPieces(gameState, gameState.heldPiece));
     }
   }
+  dispatch(holdUsed());
   dispatch(redrawStage());
 };
 

@@ -12,6 +12,7 @@ const initialState = {
   playerCollided: false,
   nextPiece: null,
   heldPiece: null,
+  holdAvailable: true,
   rowsCleared: 0,
   score: 0,
   time: 120,
@@ -58,6 +59,18 @@ const setCurrentPiece = (state, action) => {
 const holdPiece = (state, action) => {
   return updateState(state, {
     heldPiece: action.heldPiece,
+  });
+};
+
+const holdUsed = (state, action) => {
+  return updateState(state, {
+    holdAvailable: false,
+  });
+};
+
+const resetHold = (state, action) => {
+  return updateState(state, {
+    holdAvailable: true,
   });
 };
 
@@ -155,6 +168,10 @@ const gameReducer = (state = initialState, action) => {
       return generateNewPiece(state, action);
     case actionTypes.HOLD_PIECE:
       return holdPiece(state, action);
+    case actionTypes.HOLD_USED:
+      return holdUsed(state, action);
+    case actionTypes.RESET_HOLD:
+      return resetHold(state, action);
     case actionTypes.SET_DROPTIME:
       return setDropTime(state, action);
     case actionTypes.SET_CURRENT_PIECE:

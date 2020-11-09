@@ -23,6 +23,9 @@ const Tetris = (props) => {
         nextPiece={props.game.nextPiece}
         heldPiece={props.game.heldPiece}
         gameRunning={props.game.gameRunning}
+        score={props.game.score}
+        rowsCleared={props.game.rowsCleared}
+        time={props.game.time}
       />
     </StyledTetris>
   );

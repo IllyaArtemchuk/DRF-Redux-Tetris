@@ -51,7 +51,12 @@ class SideBar extends React.Component {
             gameRunning={this.props.gameRunning}
           />
         </PieceDisplays>
-        <ScoreDisplay size={this.props.size} />
+        <ScoreDisplay
+          size={this.props.size}
+          score={this.props.score}
+          rowsCleared={this.props.rowsCleared}
+          time={this.props.time}
+        />
         {!this.props.gameStarted ? (
           <StartButton
             color="green"
