@@ -102,6 +102,18 @@ export const startGame = () => {
   };
 };
 
+export const resetGame = () => {
+  return {
+    type: actionTypes.RESET_GAME,
+  };
+};
+
+export const resetScore = () => {
+  return {
+    type: actionTypes.RESET_SCORE,
+  };
+};
+
 export const stopGame = () => {
   return {
     type: actionTypes.STOP_GAME,
@@ -120,6 +132,12 @@ export const collidedFalse = () => {
   };
 };
 
+export const decrementTime = () => {
+  return {
+    type: actionTypes.DECREMENT_TIME,
+  };
+};
+
 // used for more drastic movement of
 // the player in the case of collission detection or swapping out piece for held piece
 export const replacePlayerPosition = (playerPosition) => {
@@ -133,11 +151,12 @@ export const replacePlayerPosition = (playerPosition) => {
 //         ACTIONS YOU CALL         //
 //////////////////////////////////////
 
-// Tetris Initial Componen t Mount Setup
+// Tetris Initial Component Mount Setup
 export const setupGame = (pieces = undefined) => (dispatch) => {
   dispatch(stageCreate(pieces));
   dispatch(generateNewPiece(pieces));
   dispatch(stopGame());
+  dispatch(resetScore());
 };
 
 // On Game Start
@@ -168,6 +187,10 @@ export const handleMerge = (gameState, pieces = undefined) => (dispatch) => {
   dispatch(collidedFalse());
   dispatch(resetHold());
   dispatch(redrawStage());
+};
+
+export const stopGameCleanUp = () => (dispatch) => {
+  dispatch(resetGame());
 };
 
 // Handles all game inputs
@@ -285,22 +308,24 @@ export const hardDrop = (gameState) => (dispatch) => {
 export const handleHeldPiece = (gameState, pieces = undefined) => (
   dispatch
 ) => {
-  if (gameState.heldPiece === null) {
-    if (dispatch(handleSwappingPieces(gameState, gameState.nextPiece))) {
-      dispatch(holdPiece(gameState.currentPiece));
-      dispatch(setCurrentPiece(gameState.nextPiece));
-      dispatch(generateNewPiece(pieces));
+  if (gameState.holdAvailable) {
+    if (gameState.heldPiece === null) {
+      if (dispatch(handleSwappingPieces(gameState, gameState.nextPiece))) {
+        dispatch(holdPiece(gameState.currentPiece));
+        dispatch(setCurrentPiece(gameState.nextPiece));
+        dispatch(generateNewPiece(pieces));
+      }
+    } else {
+      let heldPiece = _.cloneDeep(gameState.heldPiece);
+      if (dispatch(handleSwappingPieces(gameState, heldPiece))) {
+        dispatch(holdPiece(gameState.currentPiece));
+        dispatch(setCurrentPiece(heldPiece));
+        dispatch(handleSwappingPieces(gameState, gameState.heldPiece));
+      }
     }
-  } else {
-    let heldPiece = _.cloneDeep(gameState.heldPiece);
-    if (dispatch(handleSwappingPieces(gameState, heldPiece))) {
-      dispatch(holdPiece(gameState.currentPiece));
-      dispatch(setCurrentPiece(heldPiece));
-      dispatch(handleSwappingPieces(gameState, gameState.heldPiece));
-    }
+    dispatch(holdUsed());
+    dispatch(redrawStage());
   }
-  dispatch(holdUsed());
-  dispatch(redrawStage());
 };
 
 const handleSwappingPieces = (gameState, newCurr) => (dispatch) => {

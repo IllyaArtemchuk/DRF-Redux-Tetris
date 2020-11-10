@@ -29,7 +29,7 @@ const SignUpRedirect = styled(Message)`
         props.color === "pink" ? "#d659ff" : "#ff59b7"};
     }
     transition: 0.1s;
-    border-radius: 25px;
+    border-radius: 0px !important;
   }
 `;
 
@@ -39,6 +39,7 @@ const StyledSegment = styled(Segment)`
     border-style: solid;
     border-color: black;
     border-width: 1.5px;
+    border-radius: 0px;
     transition: 0.2s;
     &:hover {
       border-color: ${(props) => {

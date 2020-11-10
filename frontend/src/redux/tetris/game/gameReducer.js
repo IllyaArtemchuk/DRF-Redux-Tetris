@@ -25,6 +25,23 @@ const startGame = (state, action) => {
   });
 };
 
+const resetGame = (state, action) => {
+  return updateState(state, {
+    gameRunning: false,
+    stage: null,
+    dropTime: null,
+    pieces: null,
+    currentPiece: null,
+    playerPosition: { x: 0, y: 0 },
+    playerCollided: false,
+    nextPiece: null,
+    heldPiece: null,
+    holdAvailable: true,
+    chain: 0,
+    time: 120,
+  });
+};
+
 const stopGame = (state, action) => {
   return updateState(state, {
     gameRunning: false,
@@ -107,6 +124,12 @@ const collidedTrue = (state, action) => {
   });
 };
 
+const decrementTime = (state, action) => {
+  return updateState(state, {
+    time: state.time - 1,
+  });
+};
+
 // The logic for sweeping rows and redrawing the stage is in this file because it already has access to the previous state
 const sweepRows = (state, action) => {
   let newRowsCleared = 0;
@@ -156,12 +179,23 @@ const redrawStage = (state, action) => {
   });
 };
 
+const resetScore = (state, action) => {
+  return updateState(state, {
+    score: 0,
+    rowsCleared: 0,
+  });
+};
+
 const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.START_GAME:
       return startGame(state, action);
     case actionTypes.STOP_GAME:
       return stopGame(state, action);
+    case actionTypes.RESET_GAME:
+      return resetGame(state, action);
+    case actionTypes.RESET_SCORE:
+      return resetScore(state, action);
     case actionTypes.STAGE_CREATE:
       return stageCreate(state, action);
     case actionTypes.GENERATE_NEW_PIECE:
@@ -190,6 +224,8 @@ const gameReducer = (state = initialState, action) => {
       return collidedTrue(state, action);
     case actionTypes.COLLIDED_FALSE:
       return collidedFalse(state, action);
+    case actionTypes.DECREMENT_TIME:
+      return decrementTime(state, action);
     default:
       return state;
   }

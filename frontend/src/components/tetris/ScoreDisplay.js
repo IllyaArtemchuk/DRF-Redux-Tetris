@@ -19,6 +19,7 @@ const ScoreCard = styled(Card)`
       }
     }};
     background-color: #050505;
+    border-radius: 0px;
   }
 `;
 

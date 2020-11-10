@@ -35,11 +35,13 @@ const StyledCard = styled(Card)`
     border: 0px;
     margin-right: calc(4px + 0.9vw);
     margin-top: 0px;
+    border-radius: 0px;
   }
 `;
 
 const CardText = styled(Card.Header)`
   margin-top: 0.1vw;
+  margin-bottom: calc(2px + 0.3vw);
 `;
 
 const PieceDisplay = (props) => {
@@ -51,8 +53,8 @@ const PieceDisplay = (props) => {
       if (piece[1][1] !== 0) {
         pieceChar = piece[1][1];
       } else {
-        for (let row of piece) {
-          for (let col of piece) {
+        for (let row in piece) {
+          for (let col in piece[0]) {
             if (piece[row][col] !== 0) {
               pieceChar = piece[row][col];
               break;
@@ -71,10 +73,6 @@ const PieceDisplay = (props) => {
         size="small"
       />
     );
-  };
-
-  const justreturnthefuckingurl = () => {
-    return "../../static/img/pieces/Empty.jpg";
   };
 
   return (

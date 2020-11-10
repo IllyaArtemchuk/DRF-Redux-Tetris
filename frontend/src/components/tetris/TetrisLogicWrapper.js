@@ -1,11 +1,14 @@
 import React from "react";
+import history from "../../history";
 import Tetris from "./Tetris";
 import { connect } from "react-redux";
 import {
   startGameSetup,
   setupGame,
+  stopGameCleanUp,
   handleKeyPress,
   movePlayerDown,
+  decrementTime,
 } from "../../redux/tetris/game/gameActions";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 
@@ -15,6 +18,12 @@ class TetrisWrapper extends React.Component {
     this.props.setupGame();
   }
 
+  componentWillUnmount() {
+    this.props.stopGameCleanUp();
+    clearInterval(this.Interval);
+    clearInterval(this.GameTime);
+  }
+
   componentDidUpdate(prevProps) {
     if (
       prevProps.game.gameRunning !== this.props.game.gameRunning &&
@@ -22,17 +31,27 @@ class TetrisWrapper extends React.Component {
     ) {
       clearInterval(this.Interval);
     }
+    if (prevProps.game.time === 0 && this.props.game.time === -1) {
+      history.push("/signin");
+    }
   }
 
-  startInterval = () => {
+  startInterval = (time = 400) => {
     this.Interval = setInterval(() => {
       this.props.movePlayerDown(this.props.game);
-    }, 400);
+    }, time);
+  };
+
+  startTimer = () => {
+    this.GameTime = setInterval(() => {
+      this.props.decrementTime();
+    }, 1000);
   };
 
   startGame = () => {
     this.props.startGame(this.props.game.nextPiece);
     this.startInterval();
+    this.startTimer();
   };
 
   render() {
@@ -44,11 +63,12 @@ class TetrisWrapper extends React.Component {
             if (key === "down") {
               clearInterval(this.Interval);
             }
+
             this.props.handleKeyPress(key, this.props.game);
           }}
         />
         <KeyboardEventHandler
-          handleKeys={["down", "space"]}
+          handleKeys={["down", "space", "left", "right"]}
           handleEventType="keyup"
           onKeyEvent={(key, e) => {
             if (this.props.game.gameRunning && key === "down") {
@@ -78,6 +98,8 @@ const mapDispatchToProps = (dispatch) => {
     handleKeyPress: (key, gameState) =>
       dispatch(handleKeyPress(key, gameState)),
     movePlayerDown: (gameState) => dispatch(movePlayerDown(gameState)),
+    stopGameCleanUp: () => dispatch(stopGameCleanUp()),
+    decrementTime: () => dispatch(decrementTime()),
   };
 };
 

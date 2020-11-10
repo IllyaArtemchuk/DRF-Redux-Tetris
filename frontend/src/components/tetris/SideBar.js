@@ -19,7 +19,9 @@ const StartButton = styled(Button)`
   &&& {
     font-family: PixelFont;
     font-size: 1.3vw;
+    margin-top: 1vw;
     width: 11vw;
+    border-radius: 0px;
     min-width: ${(props) => {
       switch (props.size) {
         case "large":
