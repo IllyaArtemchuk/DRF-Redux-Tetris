@@ -11,9 +11,9 @@ const StyledCard = styled(Card)`
         case "small":
           return "75px";
         case "medium":
-          return "90px";
+          return "95px";
         case "large":
-          return "100px";
+          return "109px";
       }
     }};
     min-width: ${(props) => {

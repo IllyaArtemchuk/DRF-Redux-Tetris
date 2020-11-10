@@ -33,6 +33,12 @@ const SignUpRedirect = styled(Message)`
   }
 `;
 
+const FormHeader = styled(Header)`
+  font-family: pixelFont;
+  text-align: center;
+  color: white;
+`;
+
 const StyledSegment = styled(Segment)`
   &&& {
     background-color: #050505;
@@ -133,9 +139,9 @@ class StandardForm extends React.Component {
       <FormGrid>
         {this.showErrorMessage()}
         <StyledSegment color={this.props.color}>
-          <Header textAlign="center" as="h1" inverted>
+          <FormHeader textAlign="center" as="h1" inverted>
             {this.props.title}
-          </Header>
+          </FormHeader>
           <ClickOutHandler onClickOut={this.onFormClickOut}>
             <Form inverted onSubmit={this.props.handleFormSubmit}>
               {this.generateFields(this.props.fields)}

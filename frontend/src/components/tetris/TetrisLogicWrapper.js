@@ -9,6 +9,8 @@ import {
   handleKeyPress,
   movePlayerDown,
   decrementTime,
+  gameOver,
+  stopGame,
 } from "../../redux/tetris/game/gameActions";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 
@@ -32,7 +34,11 @@ class TetrisWrapper extends React.Component {
       clearInterval(this.Interval);
     }
     if (prevProps.game.time === 0 && this.props.game.time === -1) {
-      history.push("/signin");
+      this.props.gameOver();
+      this.props.stopGame();
+    }
+    if (!prevProps.game.gameOver && this.props.game.gameOver) {
+      clearInterval(this.GameTime);
     }
   }
 
@@ -75,6 +81,8 @@ class TetrisWrapper extends React.Component {
               this.startInterval();
             }
             if (key === "space") {
+              // this is one extra movement after the hardDrop function in redux that will
+              // collide the tetromino and merge it with the board
               this.props.movePlayerDown(this.props.game);
             }
           }}
@@ -100,6 +108,8 @@ const mapDispatchToProps = (dispatch) => {
     movePlayerDown: (gameState) => dispatch(movePlayerDown(gameState)),
     stopGameCleanUp: () => dispatch(stopGameCleanUp()),
     decrementTime: () => dispatch(decrementTime()),
+    gameOver: () => dispatch(gameOver()),
+    stopGame: () => dispatch(stopGame()),
   };
 };
 

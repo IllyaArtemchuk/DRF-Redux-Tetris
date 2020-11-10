@@ -108,6 +108,12 @@ export const resetGame = () => {
   };
 };
 
+export const gameOver = () => {
+  return {
+    type: actionTypes.GAME_OVER,
+  };
+};
+
 export const resetScore = () => {
   return {
     type: actionTypes.RESET_SCORE,
@@ -252,6 +258,7 @@ export const movePlayerDown = (gameState) => (dispatch) => {
     // it stops when a block reaches the top instead of when a block is out of bounds like normal tetris
     if (gameState.playerPosition.y < 1) {
       dispatch(stopGame());
+      dispatch(gameOver());
     }
     dispatch(handleMerge(gameState));
   }

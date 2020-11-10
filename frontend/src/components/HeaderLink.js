@@ -5,7 +5,9 @@ import { Menu } from "semantic-ui-react";
 import history from "../history";
 
 const LinkText = styled.span`
-  font-family: "Trispace", sans-serif;
+  font-family: "PixelFont", sans-serif;
+  font-size: 13px;
+  color: #ffffff;
 `;
 
 const colorReference = {
@@ -26,9 +28,13 @@ const HeaderLink = ({ to, color, id, icon, text, selectedItem }) => {
       onClick={() => history.push(to)}
     >
       <i
-        style={
-          id === selectedItem ? null : { color: `${colorReference[color]}` }
-        }
+        style={{
+          fontSize: "19px",
+          color: id === selectedItem ? null : `${colorReference[color]}`,
+        }}
+        // style={
+        //   id === selectedItem ? null : { color: `${colorReference[color]}` }
+        // }
         className={`${icon} icon`}
       />
       <LinkText>{text}</LinkText>

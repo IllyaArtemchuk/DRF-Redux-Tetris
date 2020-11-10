@@ -7,7 +7,9 @@ import Title from "./Title";
 import { Menu, Container } from "semantic-ui-react";
 
 const HeaderTitle = styled.div`
-  font-family: "Monda", sans-serif;
+  font-family: pixelFont, sans-serif;
+  font-size: 15px;
+  color: #ffffff;
 `;
 
 const NavBar = styled(Menu)`
@@ -18,7 +20,9 @@ const NavBar = styled(Menu)`
 
 const LogOut = styled.a`
   &&& {
-    font-family: "Trispace", sans-serif;
+    font-family: "PixelFont", sans-serif;
+    font-size: 13px;
+    color: #ffffff !important;
   }
 `;
 
@@ -62,11 +66,12 @@ const Header = (props) => {
   return (
     <BlackBar>
       <Container>
-        <NavBar inverted size="massive">
+        <NavBar inverted size="large">
           <Link to="/">
             <Menu.Item>
               <HeaderTitle>
-                REDUX- <Title />
+                REDUX-
+                <Title />
               </HeaderTitle>
             </Menu.Item>
           </Link>
@@ -98,7 +103,10 @@ const Header = (props) => {
                   text="Profile"
                 />
                 <LogOut className="purple item" onClick={props.authLogOut}>
-                  <i className="sign-out icon" style={{ color: "#d659ff" }} />
+                  <i
+                    className="sign-out icon"
+                    style={{ color: "#d659ff", fontSize: "19px" }}
+                  />
                   Log Out
                 </LogOut>
               </React.Fragment>

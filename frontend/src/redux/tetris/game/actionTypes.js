@@ -1,5 +1,6 @@
 export const START_GAME = "START_GAME";
 export const RESET_GAME = "RESET_GAME";
+export const GAME_OVER = "GAME_OVER";
 export const RESET_SCORE = "RESET_SCORE";
 export const STOP_GAME = "STOP_GAME";
 export const STAGE_CREATE = "STAGE_CREATE";

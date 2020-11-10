@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import ContentContainer from "./ContentContainer";
 import { Card, Button } from "semantic-ui-react";
 import styled from "styled-components";
@@ -12,6 +13,7 @@ const StyledCard = styled(Card)`
     background-color: #050505;
     color: white;
     min-width: 300px;
+    border-radius: 0px;
   }
 `;
 
@@ -35,7 +37,6 @@ const DescItem = styled.div`
 
 const StyledButton = styled(Button)`
   &&& {
-    margin-top: calc(10px + 2vw);
     margin-bottom: calc(5px + 1.5vw);
     font-family: pixelFont;
     font-size: calc(10px + 1vw);
@@ -51,22 +52,32 @@ const Divider = styled.div`
 `;
 
 class Results extends React.Component {
+  displayUserName = () => {
+    if (this.props.user) {
+      return this.props.user.username;
+    } else {
+      return "Unknown";
+    }
+  };
   renderDescription = () => {
     return (
       <Desc>
         <Divider>
           <DescItem color="#ffb300">User</DescItem>
-          <DescItem>Big Chungus</DescItem>
+          <DescItem>{this.displayUserName()}</DescItem>
         </Divider>
         <Divider>
           <DescItem color="#2afa62">Score</DescItem>
-          <DescItem>1000</DescItem>
+          <DescItem>{this.props.score}</DescItem>
         </Divider>
         <Divider>
           <DescItem color="#c300ff">Lines</DescItem>
-          <DescItem>7</DescItem>
+          <DescItem>{this.props.lines}</DescItem>
         </Divider>
-        <StyledButton color="pink">Submit</StyledButton>
+        <Divider>
+          <StyledButton color="pink">Submit</StyledButton>
+          <StyledButton color="green">Replay</StyledButton>
+        </Divider>
       </Desc>
     );
   };
@@ -74,7 +85,6 @@ class Results extends React.Component {
     return (
       <ContentContainer textAlign="center">
         <StyledCard
-          color="pink"
           header={<HeaderText style={{ color: "white" }}>RESULTS</HeaderText>}
           description={this.renderDescription()}
           inverted
@@ -84,4 +94,12 @@ class Results extends React.Component {
   }
 }
 
-export default Results;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+    score: state.game.score,
+    lines: state.game.rowsCleared,
+  };
+};
+
+export default connect(mapStateToProps)(Results);

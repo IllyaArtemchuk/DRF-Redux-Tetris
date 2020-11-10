@@ -4,6 +4,7 @@ import { scoreCalculator } from "./utilityFunctions";
 
 const initialState = {
   gameRunning: false,
+  gameOver: false,
   stage: null,
   dropTime: null,
   pieces: null,
@@ -45,6 +46,14 @@ const resetGame = (state, action) => {
 const stopGame = (state, action) => {
   return updateState(state, {
     gameRunning: false,
+  });
+};
+
+// set to true when the player loses or runs out of time
+// as opposed to game stop which is run in more scenarios
+const gameOver = (state, action) => {
+  return updateState(state, {
+    gameOver: true,
   });
 };
 
@@ -192,6 +201,8 @@ const gameReducer = (state = initialState, action) => {
       return startGame(state, action);
     case actionTypes.STOP_GAME:
       return stopGame(state, action);
+    case actionTypes.GAME_OVER:
+      return gameOver(state, action);
     case actionTypes.RESET_GAME:
       return resetGame(state, action);
     case actionTypes.RESET_SCORE:
