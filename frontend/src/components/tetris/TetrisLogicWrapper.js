@@ -33,7 +33,7 @@ class TetrisWrapper extends React.Component {
     ) {
       clearInterval(this.Interval);
     }
-    if (prevProps.game.time === 0 && this.props.game.time === -1) {
+    if (prevProps.game.time === 1 && this.props.game.time === 0) {
       this.props.gameOver();
       this.props.stopGame();
     }
@@ -42,7 +42,7 @@ class TetrisWrapper extends React.Component {
     }
   }
 
-  startInterval = (time = 400) => {
+  startDropInterval = (time = 500) => {
     this.Interval = setInterval(() => {
       this.props.movePlayerDown(this.props.game);
     }, time);
@@ -56,7 +56,7 @@ class TetrisWrapper extends React.Component {
 
   startGame = () => {
     this.props.startGame(this.props.game.nextPiece);
-    this.startInterval();
+    this.startDropInterval();
     this.startTimer();
   };
 
@@ -78,7 +78,7 @@ class TetrisWrapper extends React.Component {
           handleEventType="keyup"
           onKeyEvent={(key, e) => {
             if (this.props.game.gameRunning && key === "down") {
-              this.startInterval();
+              this.startDropInterval();
             }
             if (key === "space") {
               // this is one extra movement after the hardDrop function in redux that will

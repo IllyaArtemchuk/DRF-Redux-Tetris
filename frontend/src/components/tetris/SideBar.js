@@ -1,6 +1,7 @@
 import React from "react";
 import PieceDisplay from "./PieceDisplay";
 import ScoreDisplay from "./ScoreDisplay";
+import GameOver from "./GameOver";
 import styled from "styled-components";
 import { Button } from "semantic-ui-react";
 import { connect } from "react-redux";
@@ -40,18 +41,24 @@ class SideBar extends React.Component {
     return (
       <Wrapper>
         <PieceDisplays>
-          <PieceDisplay
-            text="HOLD"
-            size={this.props.size}
-            piece={this.props.heldPiece}
-            gameRunning={this.props.gameRunning}
-          />
-          <PieceDisplay
-            text="NEXT"
-            size={this.props.size}
-            piece={this.props.nextPiece}
-            gameRunning={this.props.gameRunning}
-          />
+          {this.props.gameOver ? (
+            <GameOver size={this.props.size} />
+          ) : (
+            <React.Fragment>
+              <PieceDisplay
+                text="HOLD"
+                size={this.props.size}
+                piece={this.props.heldPiece}
+                gameRunning={this.props.gameRunning}
+              />
+              <PieceDisplay
+                text="NEXT"
+                size={this.props.size}
+                piece={this.props.nextPiece}
+                gameRunning={this.props.gameRunning}
+              />
+            </React.Fragment>
+          )}
         </PieceDisplays>
         <ScoreDisplay
           size={this.props.size}
@@ -77,6 +84,7 @@ const mapStateToProps = (state) => {
   return {
     size: state.app.size,
     gameStarted: state.game.gameRunning,
+    gameOver: state.game.gameOver,
   };
 };
 
