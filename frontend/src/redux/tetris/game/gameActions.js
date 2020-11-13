@@ -159,9 +159,10 @@ export const replacePlayerPosition = (playerPosition) => {
 
 // Tetris Initial Component Mount Setup
 export const setupGame = (pieces = undefined) => (dispatch) => {
+  dispatch(resetGame());
   dispatch(stageCreate(pieces));
   dispatch(generateNewPiece(pieces));
-  dispatch(stopGame());
+
   dispatch(resetScore());
 };
 

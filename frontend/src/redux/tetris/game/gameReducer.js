@@ -40,6 +40,7 @@ const resetGame = (state, action) => {
     holdAvailable: true,
     chain: 0,
     time: 120,
+    gameOver: false,
   });
 };
 

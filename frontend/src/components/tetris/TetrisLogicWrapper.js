@@ -16,6 +16,16 @@ import KeyboardEventHandler from "react-keyboard-event-handler";
 
 // This Component Handles main tetris logic with redux
 class TetrisWrapper extends React.Component {
+  state = {
+    spaceHeld: false,
+  };
+
+  shouldComponentUpdate(prevProps, prevState) {
+    if (prevState.spaceHeld !== this.state.spaceHeld) {
+      return false;
+    }
+    return true;
+  }
   componentDidMount() {
     this.props.setupGame();
   }
@@ -69,21 +79,30 @@ class TetrisWrapper extends React.Component {
             if (key === "down") {
               clearInterval(this.Interval);
             }
-
-            this.props.handleKeyPress(key, this.props.game);
+            if (key === "space") {
+              if (!this.state.spaceHeld) {
+                this.props.handleKeyPress(key, this.props.game);
+              }
+              this.setState({ spaceHeld: true });
+            } else {
+              this.props.handleKeyPress(key, this.props.game);
+            }
           }}
         />
         <KeyboardEventHandler
           handleKeys={["down", "space", "left", "right"]}
           handleEventType="keyup"
           onKeyEvent={(key, e) => {
-            if (this.props.game.gameRunning && key === "down") {
-              this.startDropInterval();
-            }
-            if (key === "space") {
-              // this is one extra movement after the hardDrop function in redux that will
-              // collide the tetromino and merge it with the board
-              this.props.movePlayerDown(this.props.game);
+            if (this.props.game.gameRunning) {
+              if (key === "down") {
+                this.startDropInterval();
+              }
+              if (key === "space") {
+                this.setState({ spaceHeld: false });
+                // this is one extra movement after the hardDrop function in redux that will
+                // collide the tetromino and merge it with the board
+                this.props.movePlayerDown(this.props.game);
+              }
             }
           }}
         />

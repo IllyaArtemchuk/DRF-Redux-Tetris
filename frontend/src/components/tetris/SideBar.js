@@ -3,8 +3,11 @@ import PieceDisplay from "./PieceDisplay";
 import ScoreDisplay from "./ScoreDisplay";
 import GameOver from "./GameOver";
 import styled from "styled-components";
-import { Button } from "semantic-ui-react";
+import ReplayButton from "./ReplayButton";
+import SubmitButton from "./SubmitButton";
+import { StyledButton } from "../StyledComponents";
 import { connect } from "react-redux";
+import { setupGame } from "../../redux/tetris/game/gameActions";
 
 const Wrapper = styled.div`
   &&& {
@@ -16,27 +19,23 @@ const PieceDisplays = styled.div`
   display: flex;
 `;
 
-const StartButton = styled(Button)`
-  &&& {
-    font-family: PixelFont;
-    font-size: 1.3vw;
-    margin-top: 1vw;
-    width: 11vw;
-    border-radius: 0px;
-    min-width: ${(props) => {
-      switch (props.size) {
-        case "large":
-          return "170px";
-        case "medium":
-          return "140px";
-        case "small":
-          return "110px";
-      }
-    }}!important;
-  }
-`;
-
 class SideBar extends React.Component {
+  renderGameEndButtons = () => {
+    if (this.props.gameOver) {
+      return (
+        <React.Fragment>
+          <div>
+            <SubmitButton size={this.props.size} />
+          </div>
+          <ReplayButton
+            size={this.props.size}
+            restartGame={this.props.setupGame}
+          />
+        </React.Fragment>
+      );
+    }
+  };
+
   render() {
     return (
       <Wrapper>
@@ -66,14 +65,15 @@ class SideBar extends React.Component {
           rowsCleared={this.props.rowsCleared}
           time={this.props.time}
         />
-        {!this.props.gameStarted ? (
-          <StartButton
+        {this.renderGameEndButtons()}
+        {!this.props.gameStarted && !this.props.gameOver ? (
+          <StyledButton
             color="green"
             size={this.props.size}
             onClick={this.props.startGame}
           >
             Start Game
-          </StartButton>
+          </StyledButton>
         ) : null}
       </Wrapper>
     );
@@ -88,4 +88,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SideBar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setupGame: () => dispatch(setupGame()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

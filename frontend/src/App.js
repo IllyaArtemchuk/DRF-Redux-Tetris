@@ -7,7 +7,6 @@ import SignUp from "./components/user/SignUp";
 import SignIn from "./components/user/SignIn";
 import Profile from "./components/user/Profile";
 import Leaderboards from "./components/Leaderboards";
-import Results from "./components/Results";
 import Header from "./components/Header";
 import styled from "styled-components";
 import backgroundImage from "./static/img/backgroundImage.jpg";
@@ -76,7 +75,6 @@ class App extends React.Component {
               <Route path="/signup" exact component={SignUp} />
               <Route path="/signin" exact component={SignIn} />
               <Route path="/profile/:id" exact component={Profile} />
-              <Route path="/results" exact component={Results} />
             </Switch>
           </div>
         </Router>
