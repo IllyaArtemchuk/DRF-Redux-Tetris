@@ -25,11 +25,12 @@ class SideBar extends React.Component {
       return (
         <React.Fragment>
           <div>
-            <SubmitButton size={this.props.size} />
+            <SubmitButton size={this.props.size} user={this.props.user} />
           </div>
           <ReplayButton
             size={this.props.size}
             restartGame={this.props.setupGame}
+            user={this.props.user}
           />
         </React.Fragment>
       );
@@ -85,6 +86,7 @@ const mapStateToProps = (state) => {
     size: state.app.size,
     gameStarted: state.game.gameRunning,
     gameOver: state.game.gameOver,
+    user: state.user.user,
   };
 };
 
