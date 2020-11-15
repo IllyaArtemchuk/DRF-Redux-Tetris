@@ -25,7 +25,6 @@ export const StyledButton = styled(Button)`
 export const SideBarCard = styled(Card)`
   &&& {
     font-family: PixelFont;
-    text-align: center;
     width: 11vw;
     height: 3vw;
     color: white;

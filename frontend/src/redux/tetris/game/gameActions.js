@@ -162,7 +162,6 @@ export const setupGame = (pieces = undefined) => (dispatch) => {
   dispatch(resetGame());
   dispatch(stageCreate(pieces));
   dispatch(generateNewPiece(pieces));
-
   dispatch(resetScore());
 };
 

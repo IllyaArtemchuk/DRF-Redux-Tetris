@@ -29,30 +29,9 @@ const SideBarCard = styled(Card)`
   }
 `;
 
-const ReplayButton = ({ size, restartGame, user }) => {
-  const [replayClicked, setReplayClicked] = useState(false);
-
-  const handleClick = () => {
-    if (user) {
-      setReplayClicked(true);
-    } else {
-      restartGame();
-    }
-  };
-  if (replayClicked) {
-    return (
-      <div>
-        <SideBarCard size={size}>
-          Are You Sure? Unsubmitted score will be lost.
-        </SideBarCard>
-        <StyledButton color="green" size={size} onClick={() => restartGame()}>
-          Yes, Replay
-        </StyledButton>
-      </div>
-    );
-  }
+const ReplayButton = ({ size, restartGame }) => {
   return (
-    <StyledButton onClick={() => handleClick()} color="green" size={size}>
+    <StyledButton onClick={() => restartGame()} color="green" size={size}>
       Replay
     </StyledButton>
   );

@@ -17,6 +17,7 @@ class ScoresList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer, **kwargs):
         kwargs['player'] = self.request.user
+        print(self.request.user)
         serializer.save(**kwargs)
 
 

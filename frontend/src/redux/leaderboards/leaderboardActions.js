@@ -14,7 +14,7 @@ export const leaderboardSuccess = (data) => {
   };
 };
 
-export const leaderboardPostSucces = () => {
+export const leaderboardPostSuccess = () => {
   return {
     type: actionTypes.LEADERBOARD_POST_SUCCESS,
   };
@@ -44,19 +44,53 @@ export const userDataLogout = () => {
 export const submitScore = (score) => (dispatch) => {
   dispatch(leaderboardStart());
   axios
-    .post("http://127.0.0.1:8000/api/v1/", {
+    .post(
+      "http://127.0.0.1:8000/api/v1/",
+      {
+        // The backend handles assigning the user
+        player: 1,
+        points: score,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+    .then(dispatch(leaderboardPostSuccess()))
+    .catch((err) => {
+      dispatch(leaderboardFail(err.message));
+    });
+};
+
+export const getLeaderboard = (customUrl = null) => (dispatch) => {
+  dispatch(leaderboardStart());
+  axios
+    .get(customUrl ? customUrl : "http://127.0.0.1:8000/api/v1/", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("token")}`,
       },
-      // The backend handles assigning the user
-      player: 1,
-      score: score,
     })
     .then((res) => {
-      dispatch(leaderboardPostSuccess());
+      dispatch(leaderboardSuccess(res.data));
     })
     .catch((err) => {
-      dispatch(leaderboardFail(err.message));
+      dispatch(leaderboardFail(err));
+    });
+};
+
+export const getUserScores = (userID) => (dispatch) => {
+  dispatch(leaderboardStart());
+  axios
+    .get(`http://127.0.0.1:8000/api/v1/${userID}/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((res) => {
+      dispatch(userDataSuccess(res.data));
     });
 };
