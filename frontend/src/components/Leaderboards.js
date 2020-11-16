@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Card, Segment } from "semantic-ui-react";
+import { List, Card, Segment, Grid } from "semantic-ui-react";
 import styled from "styled-components";
 import ContentContainer from "./ContentContainer";
 import LeaderboardItem from "./LeaderboardItem";
@@ -9,26 +9,34 @@ import {
 } from "../redux/leaderboards/leaderboardActions";
 import { connect } from "react-redux";
 
-const LeaderboardHeader = styled.h1`
-  font-family: PixelFont;
-  margin-top: 40px;
-  font-size: calc(20px + 1vw);
-`;
-
-const Container = styled(Segment)`
+const LeaderboardHeader = styled(Segment)`
   &&& {
     font-family: PixelFont;
+    color: white;
     text-align: center;
-    background: none;
-    width: 27vw;
-    min-width: 370px;
+    white-space: nowrap;
+    width: 15vw;
+    min-width: 250px;
+    border-color: white;
     border-radius: 0px;
+    font-size: calc(11px + 0.4vw);
+    background-color: #050505;
   }
 `;
 
 class Leaderboards extends React.Component {
   componentDidMount() {
     this.props.getLeaderboard();
+    if (this.props.user) {
+      this.props.getUserScores(this.props.user.id);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.user && this.props.user !== prevProps.user) {
+      this.props.getUserScores(this.props.user.id);
+      return true;
+    }
   }
 
   renderLeaderboard = () => {
@@ -46,7 +54,7 @@ class Leaderboards extends React.Component {
 
   renderUserScores = () => {
     if (this.props.leaderboard.userData) {
-      return this.props.leaderboard.userdata.results.map((score, index) => (
+      return this.props.leaderboard.userData.results.map((score, index) => (
         <LeaderboardItem score={score} key={score.id} ind={index} />
       ));
     }
@@ -54,16 +62,20 @@ class Leaderboards extends React.Component {
 
   render() {
     return (
-      <ContentContainer>
-        <span />
-        <Container>
-          <LeaderboardHeader style={{ color: "white" }}>
-            Leaderboards
-          </LeaderboardHeader>
-          {this.renderLeaderboard()}
-          {this.renderUserScores()}
-        </Container>
-      </ContentContainer>
+      <Grid>
+        <Grid.Row style={{ marginTop: "20px" }}>
+          <Grid.Column width={5}>
+            <LeaderboardHeader>Leaderboards</LeaderboardHeader>
+            {this.renderLeaderboard()}
+          </Grid.Column>
+          <Grid.Column width={4} />
+          <Grid.Column width={5}>
+            <LeaderboardHeader>Your Scores</LeaderboardHeader>
+            {this.renderUserScores()}
+          </Grid.Column>
+          <Grid.Column width={1} />
+        </Grid.Row>
+      </Grid>
     );
   }
 }
@@ -78,7 +90,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getLeaderboard: () => dispatch(getLeaderboard()),
-    getUserScores: () => dispatch(getUserScores()),
+    getUserScores: (userID) => dispatch(getUserScores(userID)),
   };
 };
 
