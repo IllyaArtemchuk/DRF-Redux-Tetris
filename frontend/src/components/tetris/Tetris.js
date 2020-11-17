@@ -16,18 +16,20 @@ export const StyledTetris = styled(Container)`
 
 const Tetris = (props) => {
   return (
-    <StyledTetris>
-      <Stage />
-      <SideBar
-        startGame={props.startGame}
-        nextPiece={props.game.nextPiece}
-        heldPiece={props.game.heldPiece}
-        gameRunning={props.game.gameRunning}
-        score={props.game.score}
-        rowsCleared={props.game.rowsCleared}
-        time={props.game.time}
-      />
-    </StyledTetris>
+    <span>
+      <StyledTetris>
+        <Stage />
+        <SideBar
+          startGame={props.startGame}
+          nextPiece={props.game.nextPiece}
+          heldPiece={props.game.heldPiece}
+          gameRunning={props.game.gameRunning}
+          score={props.game.score}
+          rowsCleared={props.game.rowsCleared}
+          time={props.game.time}
+        />
+      </StyledTetris>
+    </span>
   );
 };
 

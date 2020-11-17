@@ -20,7 +20,7 @@ const LeaderboardHeader = styled(Segment)`
     min-width: 300px;
     border-color: white;
     border-radius: 0px;
-    font-size: calc(15px + 0.7vw);
+    font-size: calc(11px + 0.8vw);
     background-color: #050505;
   }
 `;

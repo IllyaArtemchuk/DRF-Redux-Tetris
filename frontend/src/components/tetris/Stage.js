@@ -19,6 +19,7 @@ const StyledStage = styled.div`
   border-radius: 3px;
   width: 100%;
   max-width: 21vw;
+
   background: #111;
 `;
 
