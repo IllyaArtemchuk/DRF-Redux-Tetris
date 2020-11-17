@@ -54,10 +54,6 @@ const Header = (props) => {
         setSelectedItem(4);
         return;
       default:
-        if (url.startsWith("/profile")) {
-          setSelectedItem(3);
-          return;
-        }
         setSelectedItem(null);
         return;
     }
@@ -94,14 +90,6 @@ const Header = (props) => {
           <Menu.Menu position="right">
             {props.isAuthenticated ? (
               <React.Fragment>
-                <HeaderLink
-                  to={`/profile`}
-                  color="pink"
-                  id={3}
-                  selectedItem={selectedItem}
-                  icon="user"
-                  text="Profile"
-                />
                 <LogOut className="purple item" onClick={props.authLogOut}>
                   <i
                     className="sign-out icon"

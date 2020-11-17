@@ -9,7 +9,7 @@ const ScoreDisplay = styled(Segment)`
     font-size: calc(9px + 0.3vw);
     font-family: PixelFont;
     width: 15vw;
-    min-width: 250px;
+    min-width: 270px;
     height: 2.2vw;
     min-height: 40px;
     text-align: center;
@@ -31,7 +31,6 @@ const ScoreDisplay = styled(Segment)`
         return "#61ad5a";
       } else return "#ffffff";
     }};
-    margin-left: auto;
     margin-right: auto;
     border-radius: 0px;
   }

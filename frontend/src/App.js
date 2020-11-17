@@ -2,10 +2,10 @@ import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import history from "./history";
+import PrivateRoute from "./PrivateRoute";
 import TetrisWrapper from "./components/tetris/TetrisLogicWrapper";
 import SignUp from "./components/user/SignUp";
 import SignIn from "./components/user/SignIn";
-import Profile from "./components/user/Profile";
 import Leaderboards from "./components/Leaderboards";
 import Header from "./components/Header";
 import styled from "styled-components";
@@ -71,10 +71,13 @@ class App extends React.Component {
           <div className="ui container">
             <Switch>
               <Route path="/" exact component={TetrisWrapper} />
-              <Route path="/leaderboards" exact component={Leaderboards} />
+              <PrivateRoute
+                path="/leaderboards"
+                component={Leaderboards}
+                isAuthenticated={this.props.isAuthenticated}
+              />
               <Route path="/signup" exact component={SignUp} />
               <Route path="/signin" exact component={SignIn} />
-              <Route path="/profile/:id" exact component={Profile} />
             </Switch>
           </div>
         </Router>

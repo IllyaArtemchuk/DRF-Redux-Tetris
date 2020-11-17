@@ -16,7 +16,7 @@ const LeaderboardHeader = styled(Segment)`
     text-align: center;
     white-space: nowrap;
     width: 15vw;
-    min-width: 250px;
+    min-width: 270px;
     border-color: white;
     border-radius: 0px;
     font-size: calc(11px + 0.4vw);
@@ -64,12 +64,12 @@ class Leaderboards extends React.Component {
     return (
       <Grid>
         <Grid.Row style={{ marginTop: "20px" }}>
-          <Grid.Column width={5}>
+          <Grid.Column width={6}>
             <LeaderboardHeader>Leaderboards</LeaderboardHeader>
             {this.renderLeaderboard()}
           </Grid.Column>
-          <Grid.Column width={4} />
-          <Grid.Column width={5}>
+          <Grid.Column width={this.props.size === "large" ? 1 : 3} />
+          <Grid.Column width={6}>
             <LeaderboardHeader>Your Scores</LeaderboardHeader>
             {this.renderUserScores()}
           </Grid.Column>
@@ -84,6 +84,7 @@ const mapStateToProps = (state) => {
   return {
     leaderboard: state.leaderboard,
     user: state.user.user,
+    size: state.app.size,
   };
 };
 
