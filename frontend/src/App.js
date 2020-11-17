@@ -71,7 +71,7 @@ class App extends React.Component {
           <div className="ui container">
             <Switch>
               <Route path="/" exact component={TetrisWrapper} />
-              <PrivateRoute
+              <Route
                 path="/leaderboards"
                 component={Leaderboards}
                 isAuthenticated={this.props.isAuthenticated}

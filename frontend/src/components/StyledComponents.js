@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Card } from "semantic-ui-react";
+import { Button, Card, Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export const StyledButton = styled(Button)`

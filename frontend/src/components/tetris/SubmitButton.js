@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { submitScore } from "../../redux/leaderboards/leaderboardActions";
 import { StyledButton, SideBarCard, SignInLink } from "../StyledComponents";
 
+const SubmitConfirm = styled(SideBarCard)``;
+
 class SubmitButton extends React.Component {
   state = {
     submitted: false,
@@ -47,15 +49,17 @@ class SubmitButton extends React.Component {
     }
     return (
       <div>
-        <StyledButton
-          color="pink"
-          size={this.props.size}
-          loading={this.props.leaderboard.loading}
-          onClick={() => this.handleSubmit()}
-          disabled={this.state.submitted}
-        >
-          {this.showButtonText()}
-        </StyledButton>
+        {this.props.score !== 0 ? (
+          <StyledButton
+            color="pink"
+            size={this.props.size}
+            loading={this.props.leaderboard.loading}
+            onClick={() => this.handleSubmit()}
+            disabled={this.state.submitted}
+          >
+            {this.showButtonText()}
+          </StyledButton>
+        ) : null}
       </div>
     );
   }

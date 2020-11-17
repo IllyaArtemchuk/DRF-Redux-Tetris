@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Card, Segment, Grid } from "semantic-ui-react";
+import { Segment, Loader } from "semantic-ui-react";
 import styled from "styled-components";
 import ContentContainer from "./ContentContainer";
 import LeaderboardItem from "./LeaderboardItem";
@@ -7,6 +7,7 @@ import {
   getLeaderboard,
   getUserScores,
 } from "../redux/leaderboards/leaderboardActions";
+import { Pagination } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 const LeaderboardHeader = styled(Segment)`
@@ -15,16 +16,26 @@ const LeaderboardHeader = styled(Segment)`
     color: white;
     text-align: center;
     white-space: nowrap;
-    width: 15vw;
-    min-width: 270px;
+    width: 23vw;
+    min-width: 300px;
     border-color: white;
     border-radius: 0px;
-    font-size: calc(11px + 0.4vw);
+    font-size: calc(15px + 0.7vw);
     background-color: #050505;
   }
 `;
 
+const PaginationContainer = styled.div`
+  width: 23vw;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+`;
+
 class Leaderboards extends React.Component {
+  state = {
+    activePage: 1,
+  };
   componentDidMount() {
     this.props.getLeaderboard();
     if (this.props.user) {
@@ -39,17 +50,13 @@ class Leaderboards extends React.Component {
     }
   }
 
-  renderLeaderboard = () => {
-    if (this.props.leaderboard.data) {
-      return this.props.leaderboard.data.results.map((score, index) => (
-        <LeaderboardItem
-          score={score}
-          key={score.id}
-          ind={index}
-          user={this.props.user}
-        />
-      ));
-    }
+  getPage = (e, { activePage }) => {
+    this.props.getLeaderboard(
+      `http://localhost:8000/api/v1/?limit=10&offset=${activePage - 1}0`
+    );
+    this.setState({
+      activePage: activePage,
+    });
   };
 
   renderUserScores = () => {
@@ -60,22 +67,66 @@ class Leaderboards extends React.Component {
     }
   };
 
+  renderLeaderboard = () => {
+    if (this.props.leaderboard.data) {
+      return this.props.leaderboard.data.results.map((score, index) => (
+        <LeaderboardItem
+          score={score}
+          ind={index + (this.state.activePage - 1) * 10}
+          leaderboard={this.props.leaderboard.data}
+        />
+      ));
+    }
+  };
+
   render() {
     return (
-      <Grid>
-        <Grid.Row style={{ marginTop: "20px" }}>
-          <Grid.Column width={6}>
-            <LeaderboardHeader>Leaderboards</LeaderboardHeader>
-            {this.renderLeaderboard()}
-          </Grid.Column>
-          <Grid.Column width={this.props.size === "large" ? 1 : 3} />
-          <Grid.Column width={6}>
-            <LeaderboardHeader>Your Scores</LeaderboardHeader>
-            {this.renderUserScores()}
-          </Grid.Column>
-          <Grid.Column width={1} />
-        </Grid.Row>
-      </Grid>
+      <ContentContainer textAlign="center">
+        <div style={{ marginTop: "30px" }}>
+          <LeaderboardHeader>Leaderboards</LeaderboardHeader>
+          {this.props.leaderboard.data ? (
+            <span>
+              {this.renderLeaderboard()}
+              <PaginationContainer>
+                <Pagination
+                  onPageChange={this.getPage}
+                  boundaryRange={0}
+                  defaultActivePage={1}
+                  ellipsisItem={null}
+                  firstItem={null}
+                  lastItem={null}
+                  siblingRange={1}
+                  totalPages={Math.ceil(this.props.leaderboard.data.count / 10)}
+                  pointing
+                  style={{
+                    backgroundColor: "#050505",
+                    borderStyle: "solid",
+                    borderColor: "#eaff2b",
+                    borderWidth: "1px",
+                    marginTop: "20px",
+                    color: "#eaff2b",
+                  }}
+                  size="massive"
+                  inverted
+                />
+              </PaginationContainer>
+            </span>
+          ) : (
+            <Loader
+              size="massive"
+              active
+              style={{
+                marginTop: "200px",
+                fontSize: "1.5vw",
+                fontFamily: "PixelFont",
+              }}
+              inverted
+            >
+              Loading
+            </Loader>
+          )}
+        </div>
+      </ContentContainer>
     );
   }
 }
@@ -90,7 +141,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getLeaderboard: () => dispatch(getLeaderboard()),
+    getLeaderboard: (customUrl) => dispatch(getLeaderboard(customUrl)),
     getUserScores: (userID) => dispatch(getUserScores(userID)),
   };
 };

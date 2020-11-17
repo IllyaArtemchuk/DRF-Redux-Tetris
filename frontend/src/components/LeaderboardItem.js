@@ -1,83 +1,59 @@
 import React from "react";
 import styled from "styled-components";
-import { Segment, Icon, Grid } from "semantic-ui-react";
+import { Icon, Feed } from "semantic-ui-react";
 
-const ScoreDisplay = styled(Segment)`
+const FeedEvent = styled(Feed.Event)`
   &&& {
-    color: white;
+    color: ${(props) => (props.ind === 0 && !props.prev ? "#eaff2b" : "white")};
     background-color: #050505;
-    font-size: calc(9px + 0.3vw);
+    font-size: calc(10px + 0.4vw);
     font-family: PixelFont;
-    width: 15vw;
-    min-width: 270px;
-    height: 2.2vw;
-    min-height: 40px;
+    width: 23vw;
+    min-width: 300px;
+    height: 2.6vw;
+    min-height: 35px;
     text-align: center;
-    border-color: ${(props) => {
-      if (props.ind === 0) {
-        return "#ffff00";
-      } else if (props.ind === 1) {
-        return "#56dbd0";
-      } else if (props.ind === 2) {
-        return "#61ad5a";
-      } else return "#ffffff";
-    }};
-    color: ${(props) => {
-      if (props.ind === 0) {
-        return "#ffff00";
-      } else if (props.ind === 1) {
-        return "#56dbd0";
-      } else if (props.ind === 2) {
-        return "#61ad5a";
-      } else return "#ffffff";
-    }};
     margin-right: auto;
     border-radius: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${(props) =>
+      props.ind === 0 && !props.prev ? "#eaff2b" : "white"};
+    margin-top: 15px;
   }
 `;
 
-const Position = styled.div`
+const FeedSummary = styled(Feed.Summary)`
+  padding-top: calc(5px + 0.6vw);
+  float: left;
+  margin-left: 3vw;
+`;
+
+const Position = styled.span`
   &&& {
-    float: left;
-    font-size: calc(11px + 0.4vw);
+    font-size: calc(14px + 0.5vw);
+    color: ${(props) => (props.ind === 0 && !props.prev ? "#eaff2b" : "white")};
   }
 `;
 
-const LeaderboardItem = ({ score, ind, user }) => {
-  const isUser = () => {
-    return user ? user.username === score.player.username : undefined;
-  };
-
-  const positionIcon = () => {
-    if (isUser()) {
-      return <Icon name="user" />;
-    }
-    if (ind <= 2) {
-      return <Icon name="chess queen" />;
-    }
-  };
-
-  const scoreRender = () => {
-    if (score.player.username) {
-      return `${score.player.username} : ${score.points}`;
-    } else {
-      return score.points;
-    }
-  };
+const LeaderboardItem = ({ score, ind, leaderboard }) => {
+  console.log(leaderboard);
   return (
-    <ScoreDisplay $isuser={isUser()} ind={ind}>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={4}>
-            <Position $isuser={isUser()}>
-              {ind + 1}
-              {positionIcon()}
-            </Position>
-          </Grid.Column>
-          <Grid.Column width={12}>{scoreRender()}</Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </ScoreDisplay>
+    <FeedEvent
+      key={ind}
+      ind={ind}
+      prev={leaderboard ? leaderboard.previous : null}
+    >
+      <Feed.Content>
+        <FeedSummary>
+          <Position ind={ind} prev={leaderboard ? leaderboard.previous : null}>
+            {ind + 1}
+            <Icon name="chess queen" />
+          </Position>
+          {score.player.username} : {score.points}
+        </FeedSummary>
+      </Feed.Content>
+    </FeedEvent>
   );
 };
 
