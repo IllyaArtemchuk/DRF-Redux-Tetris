@@ -55,8 +55,8 @@ class App extends React.Component {
       !this.props.isAuthenticated &&
       prevProps.isAuthenticated !== this.props.isAuthenticated
     ) {
-      ("");
       this.props.userLogOut();
+      // Remove User Data in leaderboards on logout!
     }
   }
 
@@ -71,11 +71,7 @@ class App extends React.Component {
           <div className="ui container">
             <Switch>
               <Route path="/" exact component={TetrisWrapper} />
-              <Route
-                path="/leaderboards"
-                component={Leaderboards}
-                isAuthenticated={this.props.isAuthenticated}
-              />
+              <PrivateRoute path="/leaderboards" component={Leaderboards} />
               <Route path="/signup" exact component={SignUp} />
               <Route path="/signin" exact component={SignIn} />
             </Switch>
