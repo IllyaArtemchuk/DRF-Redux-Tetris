@@ -77,7 +77,7 @@ class SideBar extends React.Component {
             Start Game
           </StyledButton>
         ) : null}
-        <HowToPlay />
+        {/* <HowToPlay size={this.props.size} /> */}
       </Wrapper>
     );
   }

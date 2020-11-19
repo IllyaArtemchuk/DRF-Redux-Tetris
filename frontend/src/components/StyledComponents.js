@@ -19,6 +19,16 @@ export const StyledButton = styled(Button)`
           return "110px";
       }
     }}!important;
+    min-height: ${(props) => {
+      switch (props.size) {
+        case "large":
+          return "30px";
+        case "medium":
+          return "30px";
+        case "small":
+          return "20px";
+      }
+    }};
   }
 `;
 
@@ -55,4 +65,13 @@ export const SignInLink = styled(Link)`
   :hover {
     color: #ff00b3;
   }
+`;
+
+export const SideBarCardLarge = styled(SideBarCard)`
+  min-height: 70px !important;
+`;
+
+export const SideBarCardHuge = styled(SideBarCard)`
+  min-height: 200px !important;
+  min-width: 100px !important;
 `;

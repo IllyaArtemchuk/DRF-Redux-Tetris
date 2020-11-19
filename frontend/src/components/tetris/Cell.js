@@ -13,6 +13,7 @@ const StyledCell = styled.div`
     background-clip: padding-box;
   }
 `;
+// width: auto;
 
 const Cell = ({ type, pieces }) => (
   <StyledCell type={type} color={pieces[type].color} />

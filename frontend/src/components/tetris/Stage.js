@@ -15,11 +15,9 @@ const StyledStage = styled.div`
   grid-gap: 1px;
   border: 1px solid;
   border-bottom-color: #d659ff;
-
   border-radius: 3px;
   width: 100%;
   max-width: 21vw;
-
   background: #111;
 `;
 

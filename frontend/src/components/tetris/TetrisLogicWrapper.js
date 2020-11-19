@@ -78,6 +78,7 @@ class TetrisWrapper extends React.Component {
           onKeyEvent={(key, e) => {
             if (key === "down") {
               clearInterval(this.Interval);
+              this.downTimer = setTimeout(this.startDropInterval(), 5000);
             }
             if (key === "space") {
               if (!this.state.spaceHeld) {
@@ -95,6 +96,8 @@ class TetrisWrapper extends React.Component {
           onKeyEvent={(key, e) => {
             if (this.props.game.gameRunning) {
               if (key === "down") {
+                clearTimeout(this.downTimer);
+                clearInterval(this.Interval);
                 this.startDropInterval();
               }
               if (key === "space") {
@@ -106,7 +109,11 @@ class TetrisWrapper extends React.Component {
             }
           }}
         />
-        <Tetris game={this.props.game} startGame={this.startGame} />
+        <Tetris
+          game={this.props.game}
+          startGame={this.startGame}
+          size={this.props.size}
+        />
       </div>
     );
   }
@@ -115,6 +122,7 @@ class TetrisWrapper extends React.Component {
 const mapStateToProps = (state) => {
   return {
     game: state.game,
+    size: state.app.size,
   };
 };
 

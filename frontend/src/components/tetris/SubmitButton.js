@@ -2,7 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { submitScore } from "../../redux/leaderboards/leaderboardActions";
-import { StyledButton, SideBarCard, SignInLink } from "../StyledComponents";
+import {
+  StyledButton,
+  SideBarCard,
+  SideBarCardLarge,
+  SignInLink,
+} from "../StyledComponents";
 
 const SubmitConfirm = styled(SideBarCard)``;
 
@@ -27,9 +32,9 @@ class SubmitButton extends React.Component {
     if (!this.props.user) {
       return (
         <div>
-          <SideBarCard size={this.props.size}>
+          <SideBarCardLarge size={this.props.size}>
             <SignInLink>Sign In</SignInLink> To Be Able To Submit Scores
-          </SideBarCard>
+          </SideBarCardLarge>
           <StyledButton color="grey" disabled size={this.props.size}>
             Submit
           </StyledButton>
