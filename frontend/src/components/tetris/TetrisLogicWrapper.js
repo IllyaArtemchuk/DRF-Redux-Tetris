@@ -1,5 +1,4 @@
 import React from "react";
-import history from "../../history";
 import Tetris from "./Tetris";
 import { connect } from "react-redux";
 import {
@@ -72,7 +71,7 @@ class TetrisWrapper extends React.Component {
 
   render() {
     return (
-      <div onKeyDown={(e) => console.log(e.key)}>
+      <div>
         <KeyboardEventHandler
           handleKeys={["left", "right", "down", "up", "space", "e", "q", "v"]}
           onKeyEvent={(key, e) => {

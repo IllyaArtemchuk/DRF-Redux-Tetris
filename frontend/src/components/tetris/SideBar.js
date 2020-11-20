@@ -2,7 +2,6 @@ import React from "react";
 import PieceDisplay from "./PieceDisplay";
 import ScoreDisplay from "./ScoreDisplay";
 import GameOver from "./GameOver";
-import HowToPlay from "./HowToPlay";
 import styled from "styled-components";
 import ReplayButton from "./ReplayButton";
 import SubmitButton from "./SubmitButton";

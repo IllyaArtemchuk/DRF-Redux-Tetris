@@ -71,6 +71,7 @@ class Leaderboards extends React.Component {
     if (this.props.leaderboard.data) {
       return this.props.leaderboard.data.results.map((score, index) => (
         <LeaderboardItem
+          key={score.id}
           score={score}
           ind={index + (this.state.activePage - 1) * 10}
           leaderboard={this.props.leaderboard.data}

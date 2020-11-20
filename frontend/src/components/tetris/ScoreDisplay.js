@@ -16,6 +16,8 @@ const ScoreCard = styled(Card)`
           return "140px";
         case "small":
           return "110px";
+        default:
+          return "110px";
       }
     }};
     background-color: #050505;

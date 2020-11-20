@@ -224,7 +224,7 @@ export const handleKeyPress = (key, gameState) => (dispatch) => {
         dispatch(handleHeldPiece(gameState));
         break;
       default:
-        console.log(`${key} pressed`);
+        return;
     }
   }
 };
@@ -338,7 +338,6 @@ export const handleHeldPiece = (gameState, pieces = undefined) => (
 const handleSwappingPieces = (gameState, newCurr) => (dispatch) => {
   let newCurrent = _.cloneDeep(newCurr);
   let copiedPlayerPosition = _.cloneDeep(gameState.playerPosition);
-  let pos = copiedPlayerPosition.x;
   let offset = 1;
   while (
     checkCollision(gameState, { x: 0, y: 0 }, copiedPlayerPosition, newCurrent)

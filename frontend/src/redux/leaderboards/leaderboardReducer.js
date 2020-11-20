@@ -1,4 +1,3 @@
-import { update } from "lodash";
 import * as actionTypes from "./actionTypes";
 import { updateState } from "../utility";
 

@@ -14,6 +14,8 @@ const StyledCard = styled(Card)`
           return "95px";
         case "large":
           return "109px";
+        default:
+          return "75px";
       }
     }};
     min-width: ${(props) => {
@@ -24,6 +26,8 @@ const StyledCard = styled(Card)`
           return "65px";
         case "large":
           return "80px";
+        default:
+          return "50px";
       }
     }};
     text-align: center;

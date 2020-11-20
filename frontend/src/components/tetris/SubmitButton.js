@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { submitScore } from "../../redux/leaderboards/leaderboardActions";
 import {
   StyledButton,
@@ -8,8 +7,6 @@ import {
   SideBarCardLarge,
   SignInLink,
 } from "../StyledComponents";
-
-const SubmitConfirm = styled(SideBarCard)``;
 
 class SubmitButton extends React.Component {
   state = {

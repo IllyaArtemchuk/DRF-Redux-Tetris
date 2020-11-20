@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ClickOutHandler from "react-onclickout";
 import FormField from "./FormField";
 import ErrorMessage from "../../ErrorMessage";
+import { ErrorBody, ErrorHeader } from "../../StyledComponents";
 import {
   Segment,
   Header,
@@ -127,11 +128,14 @@ class StandardForm extends React.Component {
   };
 
   showErrorMessage = () => {
-    if (this.props.authError) {
+    if (this.props.authError)
       return <ErrorMessage errors={[this.props.authError.response.data]} />;
-    } else {
-      <div className="ui   purple message">An Error Occured.</div>;
-    }
+    if (this.props.redirectMessage)
+      return (
+        <ErrorBody>
+          <ErrorHeader>{this.props.redirectMessage} </ErrorHeader>
+        </ErrorBody>
+      );
   };
 
   render() {
@@ -163,6 +167,7 @@ class StandardForm extends React.Component {
 const mapStateToProps = (state) => {
   return {
     authError: state.auth.error,
+    redirectMessage: state.app.message,
   };
 };
 

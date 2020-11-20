@@ -59,18 +59,27 @@ const Header = (props) => {
     }
   }, [location.pathname]);
 
+  const conditionalMenuRender = (sizes = ["large"]) => {
+    for (let size of sizes) {
+      if (size === props.size) return true;
+    }
+    return false;
+  };
+
   return (
     <BlackBar>
       <Container>
-        <NavBar inverted size="large">
-          <Link to="/">
-            <Menu.Item>
-              <HeaderTitle>
-                REDUX-
-                <Title />
-              </HeaderTitle>
-            </Menu.Item>
-          </Link>
+        <NavBar inverted size={conditionalMenuRender() ? "huge" : "huge"}>
+          {conditionalMenuRender() ? (
+            <Link to="/">
+              <Menu.Item>
+                <HeaderTitle>
+                  REDUX-
+                  <Title />
+                </HeaderTitle>
+              </Menu.Item>
+            </Link>
+          ) : null}
           <HeaderLink
             to="/"
             color="green"
@@ -79,14 +88,16 @@ const Header = (props) => {
             icon="gamepad"
             text="Play Tetris"
           />
-          <HeaderLink
-            to="/leaderboards"
-            color="yellow"
-            id={2}
-            selectedItem={selectedItem}
-            icon="trophy"
-            text="Leaderboards"
-          />
+          {conditionalMenuRender(["large", "medium"]) ? (
+            <HeaderLink
+              to="/leaderboards"
+              color="yellow"
+              id={2}
+              selectedItem={selectedItem}
+              icon="trophy"
+              text="Leaderboards"
+            />
+          ) : null}
           <Menu.Menu position="right">
             {props.isAuthenticated ? (
               <React.Fragment>

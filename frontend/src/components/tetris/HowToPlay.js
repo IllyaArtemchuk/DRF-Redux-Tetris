@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card, Icon } from "semantic-ui-react";
+import { Grid, Card } from "semantic-ui-react";
 import styled from "styled-components";
 import { ReactSVG } from "react-svg";
 

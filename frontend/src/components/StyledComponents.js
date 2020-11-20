@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Card, Loader } from "semantic-ui-react";
+import { Button, Card, Message } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export const StyledButton = styled(Button)`
@@ -15,7 +15,7 @@ export const StyledButton = styled(Button)`
           return "170px";
         case "medium":
           return "140px";
-        case "small":
+        default:
           return "110px";
       }
     }}!important;
@@ -25,7 +25,7 @@ export const StyledButton = styled(Button)`
           return "30px";
         case "medium":
           return "30px";
-        case "small":
+        default:
           return "20px";
       }
     }};
@@ -51,7 +51,7 @@ export const SideBarCard = styled(Card)`
           return "170px";
         case "medium":
           return "140px";
-        case "small":
+        default:
           return "110px";
       }
     }};
@@ -74,4 +74,20 @@ export const SideBarCardLarge = styled(SideBarCard)`
 export const SideBarCardHuge = styled(SideBarCard)`
   min-height: 200px !important;
   min-width: 100px !important;
+`;
+
+export const ErrorBody = styled(Message)`
+  &&& {
+    background-color: #050505;
+    border-style: solid;
+    border-color: #ff2e2e;
+    border-width: 1.5px;
+  }
+`;
+
+export const ErrorHeader = styled(Message.Header)`
+  &&& {
+    color: #ff6161;
+    text-align: center;
+  }
 `;

@@ -3,7 +3,7 @@ import Stage from "./Stage";
 import styled from "styled-components";
 import SideBar from "./SideBar";
 import HowToPlay from "./HowToPlay";
-import { Grid, Container } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 
 export const StyledTetris = styled.div`
   &&& {

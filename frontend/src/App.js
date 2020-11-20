@@ -12,6 +12,7 @@ import styled from "styled-components";
 import backgroundImage from "./static/img/backgroundImage.jpg";
 import { authCheckState, authLogout } from "./redux/authentication/authActions";
 import { getUserData, userLogout } from "./redux/user/userActions";
+import { userDataLogout } from "./redux/leaderboards/leaderboardActions";
 import { windowResize } from "./redux/application/appActions";
 
 const Application = styled.div`
@@ -56,7 +57,7 @@ class App extends React.Component {
       prevProps.isAuthenticated !== this.props.isAuthenticated
     ) {
       this.props.userLogOut();
-      // Remove User Data in leaderboards on logout!
+      this.props.userDataLogout();
     }
   }
 
@@ -65,6 +66,7 @@ class App extends React.Component {
       <Application>
         <Router history={history}>
           <Header
+            size={this.props.size}
             isAuthenticated={this.props.isAuthenticated}
             authLogOut={this.props.authLogOut}
           />
@@ -96,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
     userLogOut: () => dispatch(userLogout()),
     authLogOut: () => dispatch(authLogout()),
     windowResize: (size) => dispatch(windowResize(size)),
+    userDataLogout: () => dispatch(userDataLogout()),
   };
 };
 

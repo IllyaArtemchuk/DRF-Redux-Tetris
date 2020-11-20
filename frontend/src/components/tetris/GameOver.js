@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Segment } from "semantic-ui-react";
-import history from "../../history.js";
 import styled from "styled-components";
 
 const GameOverBox = styled(Segment)`
@@ -15,7 +14,7 @@ const GameOverBox = styled(Segment)`
           return "170px";
         case "medium":
           return "140px";
-        case "small":
+        default:
           return "110px";
       }
     }};

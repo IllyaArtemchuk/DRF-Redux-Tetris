@@ -17,7 +17,11 @@ class ScoresList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer, **kwargs):
         kwargs['player'] = self.request.user
-        print(self.request.user)
+        query = Score.objects.filter(
+            player=self.request.user).order_by('-points')
+
+        if(len(query) == 10):
+            query.reverse()[0].delete()
         serializer.save(**kwargs)
 
 

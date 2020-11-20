@@ -37,7 +37,6 @@ const Position = styled.span`
 `;
 
 const LeaderboardItem = ({ score, ind, leaderboard }) => {
-  console.log(leaderboard);
   return (
     <FeedEvent
       key={ind}

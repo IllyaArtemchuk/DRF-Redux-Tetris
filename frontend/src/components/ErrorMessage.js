@@ -1,20 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const ErrorBody = styled.div`
-  &&& {
-    background-color: #050505;
-    border-style: solid;
-    border-color: #ff2e2e;
-    border-width: 1.5px;
-  }
-`;
-const ErrorHeader = styled.div`
-  &&& {
-    color: #ff6161;
-    text-align: center;
-  }
-`;
+import { ErrorBody, ErrorHeader } from "./StyledComponents";
 
 const ErrorMessage = ({ errors }) => {
   const FormatField = (field) => {
@@ -34,12 +19,9 @@ const ErrorMessage = ({ errors }) => {
   const renderErrors = Object.keys(errors[0]).map((key, index) => (
     <li key={index}>{`${FormatField(key)}: ${errors[0][key][0]}`}</li>
   ));
-  console.log(errors[0]);
   return (
-    <ErrorBody className="ui black message">
-      <div className="header">
-        <ErrorHeader> There were some errors with your submission </ErrorHeader>
-      </div>
+    <ErrorBody color="black">
+      <ErrorHeader> There were some errors with your submission </ErrorHeader>
       <ul className="list">{renderErrors}</ul>
     </ErrorBody>
   );
