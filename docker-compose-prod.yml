@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+  backend:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app/backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      DEBUG: "${DEBUG}"
+      DJANGO_SECRET_KEY: "${DJANGO_SECRET_KEY}"
+  frontend:
+    build: ./frontend
+    command: ["npm", "start"]
+    volumes:
+      - ./frontend:/app/frontend
+      - node-modules:/app/frontend/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      CHOKIDAR_USEPOLLING: "${CHOKIDAR_USEPOLLING}"
+
+volumes:
+  node-modules:
+  postgres_data:
