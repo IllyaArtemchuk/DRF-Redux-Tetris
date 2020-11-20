@@ -91,6 +91,7 @@ const Header = (props) => {
           {conditionalMenuRender(["large", "medium"]) ? (
             <HeaderLink
               to="/leaderboards"
+              disabled={!props.isAuthenticated}
               color="yellow"
               id={2}
               selectedItem={selectedItem}

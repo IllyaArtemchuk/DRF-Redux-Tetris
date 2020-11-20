@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authSignIn } from "../../redux/authentication/authActions";
+import { clearRedirectMessage } from "../../redux/application/appActions";
 import Form from "./form/Form";
 
 class SignIn extends React.Component {
@@ -10,6 +11,10 @@ class SignIn extends React.Component {
     usernameTouched: false,
     passwordTouched: false,
   };
+
+  componentWillUnmount() {
+    this.props.clearRedirectMessage();
+  }
 
   onInputChange = (e, input) => {
     this.setState({
@@ -83,4 +88,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default connect(null, { authSignIn })(SignIn);
+export default connect(null, { authSignIn, clearRedirectMessage })(SignIn);

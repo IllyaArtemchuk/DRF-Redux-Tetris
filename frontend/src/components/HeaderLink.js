@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Menu } from "semantic-ui-react";
+import { Menu, Popup } from "semantic-ui-react";
 import history from "../history";
 
 const LinkText = styled.span`
@@ -18,25 +18,43 @@ const colorReference = {
   yellow: "#ffe942",
 };
 
-const HeaderLink = ({ to, color, id, icon, text, selectedItem }) => {
+const SignInPopup = styled(Popup)`
+  &&& {
+    background-color: #050505;
+    font-family: PixelFont;
+  }
+`;
+
+const HeaderLink = ({ to, color, id, icon, text, selectedItem, disabled }) => {
   return (
     <Menu.Item
       id={id}
       color={color}
       active={id === selectedItem}
       onClick={() => history.push(to)}
+      disabled={disabled}
     >
-      <i
-        style={{
-          fontSize: "19px",
-          color: id === selectedItem ? null : `${colorReference[color]}`,
-        }}
-        // style={
-        //   id === selectedItem ? null : { color: `${colorReference[color]}` }
-        // }
-        className={`${icon} icon`}
-      />
-      <LinkText>{text}</LinkText>
+      <SignInPopup
+        inverted
+        disabled={!disabled}
+        trigger={
+          <span>
+            <i
+              style={{
+                fontSize: "19px",
+                color: id === selectedItem ? null : `${colorReference[color]}`,
+              }}
+              // style={
+              //   id === selectedItem ? null : { color: `${colorReference[color]}` }
+              // }
+              className={`${icon} icon`}
+            />
+            <LinkText>{text}</LinkText>
+          </span>
+        }
+      >
+        <Popup.Header>Sign In To Visit This Page</Popup.Header>
+      </SignInPopup>
     </Menu.Item>
   );
 };
