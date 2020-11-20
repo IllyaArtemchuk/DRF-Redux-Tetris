@@ -45,7 +45,7 @@ export const submitScore = (score) => (dispatch) => {
   dispatch(leaderboardStart());
   axios
     .post(
-      "http://127.0.0.1:8000/api/v1/",
+      "https://127.0.0.1:8000/api/v1/",
       {
         // The backend handles assigning the user
         player: 1,
@@ -67,7 +67,7 @@ export const submitScore = (score) => (dispatch) => {
 export const getLeaderboard = (customUrl = null) => (dispatch) => {
   dispatch(leaderboardStart());
   axios
-    .get(customUrl ? customUrl : "http://127.0.0.1:8000/api/v1/", {
+    .get(customUrl ? customUrl : "https://127.0.0.1:8000/api/v1/", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("token")}`,
@@ -84,7 +84,7 @@ export const getLeaderboard = (customUrl = null) => (dispatch) => {
 export const getUserScores = (userID) => (dispatch) => {
   dispatch(leaderboardStart());
   axios
-    .get(`http://127.0.0.1:8000/api/v1/${userID}/`, {
+    .get(`https://127.0.0.1:8000/api/v1/${userID}/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("token")}`,

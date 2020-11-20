@@ -128,8 +128,17 @@ class StandardForm extends React.Component {
   };
 
   showErrorMessage = () => {
-    if (this.props.authError)
-      return <ErrorMessage errors={[this.props.authError.response.data]} />;
+    if (this.props.authError) {
+      if (this.props.authError.response) {
+        return <ErrorMessage errors={[this.props.authError.response.data]} />;
+      } else {
+        return (
+          <ErrorBody>
+            <ErrorHeader>Server Error Occured</ErrorHeader>
+          </ErrorBody>
+        );
+      }
+    }
     if (this.props.redirectMessage)
       return (
         <ErrorBody>

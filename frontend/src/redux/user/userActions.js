@@ -31,7 +31,7 @@ export const userLogout = () => {
 export const getUserData = () => (dispatch) => {
   dispatch(userStart());
   axios
-    .get("http://localhost:8000/api/v1/users/current/", {
+    .get("https://localhost:8000/api/v1/users/current/", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("token")}`,
