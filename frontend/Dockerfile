@@ -1,5 +1,7 @@
-FROM node:14.1-alpine AS builder
+FROM node
 WORKDIR /app/frontend
 COPY package.json /app/frontend
 RUN npm install
-COPY . ./
+
+EXPOSE 3000
+CMD ["npm", "start"]
