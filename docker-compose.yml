@@ -30,7 +30,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      CHOKIDAR_USEPOLLING: "${CHOKIDAR_USEPOLLING}"
+      - NODE_ENV=production
 
 volumes:
   node-modules:
